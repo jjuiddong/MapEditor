@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="mapeditor.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="cctv.cpp" />
+    <ClCompile Include="CFW1StateSaver.cpp" />
+    <ClCompile Include="componentwindow.cpp" />
+    <ClCompile Include="dbgwindow.cpp" />
+    <ClCompile Include="geometryedit.cpp" />
+    <ClCompile Include="gridedit.cpp" />
+    <ClCompile Include="hierarchywindow.cpp" />
+    <ClCompile Include="jobmanager.cpp" />
+    <ClCompile Include="lightedit.cpp" />
+    <ClCompile Include="mapview.cpp" />
+    <ClCompile Include="modeledit.cpp" />
+    <ClCompile Include="naviedit.cpp" />
+    <ClCompile Include="pathedit.cpp" />
+    <ClCompile Include="patheditwindow.cpp" />
+    <ClCompile Include="pathmapview.cpp" />
+    <ClCompile Include="pathmesh.cpp" />
+    <ClCompile Include="resourceviewer.cpp" />
+    <ClCompile Include="resourcewindow.cpp" />
+    <ClCompile Include="root.cpp" />
+    <ClCompile Include="terraineditwindow.cpp" />
+    <ClCompile Include="terrainloader2.cpp" />
+    <ClCompile Include="tms.cpp" />
+    <ClCompile Include="truck.cpp" />
+    <ClCompile Include="vehiclepath.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="mapeditor.h" />
+    <ClInclude Include="cctv.h" />
+    <ClInclude Include="CFW1StateSaver.h" />
+    <ClInclude Include="componentwindow.h" />
+    <ClInclude Include="dbgwindow.h" />
+    <ClInclude Include="geometryedit.h" />
+    <ClInclude Include="gridedit.h" />
+    <ClInclude Include="hierarchywindow.h" />
+    <ClInclude Include="jobmanager.h" />
+    <ClInclude Include="lightedit.h" />
+    <ClInclude Include="mapview.h" />
+    <ClInclude Include="modeledit.h" />
+    <ClInclude Include="naviedit.h" />
+    <ClInclude Include="pathedit.h" />
+    <ClInclude Include="patheditwindow.h" />
+    <ClInclude Include="pathmapview.h" />
+    <ClInclude Include="pathmesh.h" />
+    <ClInclude Include="resourceviewer.h" />
+    <ClInclude Include="resourcewindow.h" />
+    <ClInclude Include="root.h" />
+    <ClInclude Include="terraineditwindow.h" />
+    <ClInclude Include="terrainloader2.h" />
+    <ClInclude Include="tms.h" />
+    <ClInclude Include="truck.h" />
+    <ClInclude Include="vehiclepath.h" />
+  </ItemGroup>
+</Project>
