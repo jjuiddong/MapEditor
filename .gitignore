@@ -328,3 +328,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+Src/MapEditor/errlog.txt
+Src/MapEditor/log.txt
