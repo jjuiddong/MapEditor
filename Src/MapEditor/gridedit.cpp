@@ -29,8 +29,8 @@ bool cGridEdit::Init(graphic::cRenderer &renderer)
 	m_row = g_root.m_cfg.GetInt("Grid-Row", 10);
 	m_col = g_root.m_cfg.GetInt("Grid-Col", 10);
 	//m_tileSize = g_root.m_cfg.GetFloat("Grid-Size", 100);
-	m_tileSize.x = g_root.m_cfg.GetFloat("Grid-SizeW", 100);
-	m_tileSize.y = g_root.m_cfg.GetFloat("Grid-SizeH", 100);
+	m_tileSize.x = max(1.f, g_root.m_cfg.GetFloat("Grid-SizeW", 100));
+	m_tileSize.y = max(1.f, g_root.m_cfg.GetFloat("Grid-SizeH", 100));
 	m_fileNameFomatter = g_root.m_cfg.GetString("Grid-Fomatter", "filename%d-%d.jpg");
 
 	ChangeGrid(renderer, m_row, m_col);

@@ -40,9 +40,9 @@ bool cPathMapView::Init()
 	m_ground.Create(renderer, 1000, 1000, 10, 10, eVertexType::POSITION | eVertexType::COLOR);
 	m_ground.m_lineColor = Vector4(0.7f, 0.7f, 0.7f, 0.7f);
 
-	m_textMgr.Create(1024);
-	m_textMgr2.Create(1024);
-	m_textMgr3.Create(128);
+	m_textMgr.Create(1024, 512);
+	m_textMgr2.Create(1024, 512);
+	m_textMgr3.Create(128, 512);
 
 	return true;
 }

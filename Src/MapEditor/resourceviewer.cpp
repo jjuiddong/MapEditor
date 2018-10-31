@@ -533,6 +533,7 @@ bool cResourceViewer::LoadResource(const StrPath &fileName)
 	if ((ext == ".x") || (ext == ".X") 
 		|| (ext == ".dae") || (ext == ".DAE")
 		|| (ext == ".fbx") || (ext == ".FBX")
+		//|| (ext == ".mdx") || (ext == ".MDX")
 		) // model file
 	{
 		m_state = eState::MODEL;

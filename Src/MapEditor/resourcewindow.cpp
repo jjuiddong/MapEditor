@@ -60,6 +60,7 @@ void cResourceWindow::UpdateResourceFile()
 		exts.push_back(L"x"); exts.push_back(L"X");
 		exts.push_back(L"dae"); exts.push_back(L"DAE");
 		exts.push_back(L"fbx"); exts.push_back(L"FBX");
+		//exts.push_back(L"mdx"); exts.push_back(L"MDX");
 		vector<WStr64> ignores;
 		ignores.push_back(L"VWorld");
 		ignores.push_back(L"WorldTerrain");
