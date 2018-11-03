@@ -100,7 +100,7 @@ void cPathEditWindow::PathFind(cRenderer &renderer)
 	else if (eNaviType::NAVIMESH == m_naviType)
 	{
 		cNaviEdit &naviEdit = g_root.m_terrainEditWindow->m_naviEdit;
-		naviEdit.m_naviMesh.Find(m_startPos, m_endPos, m_path1, m_nodePath);
+		naviEdit.m_naviMesh.Find(m_startPos, m_endPos, m_path1, &m_nodePath);
 
 		if (!m_path1.empty())
 		{
