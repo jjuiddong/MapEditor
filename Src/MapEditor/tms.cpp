@@ -69,9 +69,9 @@ void cTms::Render(graphic::cRenderer &renderer)
 			renderer.m_dbgBox.SetBox(bbox);
 			renderer.m_dbgBox.Render(renderer);
 
-			if ((1 <= vtx.type) && (vtx.edge[0] >= 0))
+			if ((1 <= vtx.type) && (vtx.edge[0].to >= 0))
 			{
-				ai::sVertex &to = m_pathFinder.m_vertices[vtx.edge[0]];
+				ai::cPathFinder::sVertex &to = m_pathFinder.m_vertices[vtx.edge[0].to];
 				const Vector3 dir = (to.pos - vtx.pos).Normal();
 
 				renderer.m_dbgArrow.SetDirection(vtx.pos + Vector3(0, 1, 0)
@@ -102,7 +102,7 @@ void cTms::ProcJobEtc(const sJob &job)
 
 	case sJob::TRUCK_LOAD_END:
 	{
-		vector<ai::sVertex*> targets;
+		vector<ai::cPathFinder::sVertex*> targets;
 		for (auto &vtx : m_pathFinder.m_vertices)
 			if (1 == vtx.type)
 				targets.push_back(&vtx);
@@ -148,12 +148,12 @@ void cTms::UpdateLineList(cRenderer &renderer)
 	m_lineList.ClearLines();
 	for (auto &vtx : m_pathFinder.m_vertices)
 	{
-		for (int i = 0; i < ai::sVertex::MAX_EDGE; ++i)
+		for (int i = 0; i < ai::cPathFinder::sVertex::MAX_EDGE; ++i)
 		{
-			if (vtx.edge[i] < 0)
+			if (vtx.edge[i].to < 0)
 				break;
 			m_lineList.AddLine(renderer, vtx.pos + Vector3(0, 1, 0)
-				, m_pathFinder.m_vertices[vtx.edge[i]].pos + Vector3(0, 1, 0));
+				, m_pathFinder.m_vertices[vtx.edge[i].to].pos + Vector3(0, 1, 0));
 		}
 	}
 }
@@ -194,7 +194,7 @@ cTruck* cTms::GetFreeTruck(graphic::cRenderer &renderer)
 
 void cTms::TruckAllocate()
 {
-	vector<ai::sVertex*> targets;
+	vector<ai::cPathFinder::sVertex*> targets;
 	for (auto &vtx : m_pathFinder.m_vertices)
 		if (1 == vtx.type)
 			targets.push_back(&vtx);

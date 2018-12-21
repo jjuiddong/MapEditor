@@ -121,9 +121,9 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 				, tfm);
 		}
 
-		if ((1 <= vtx.type) && (vtx.edge[0] >= 0))
+		if ((1 <= vtx.type) && (vtx.edge[0].to >= 0))
 		{
-			ai::sVertex &to = pathEdit.m_pathFinder.m_vertices[vtx.edge[0]];
+			ai::cPathFinder::sVertex &to = pathEdit.m_pathFinder.m_vertices[vtx.edge[0].to];
 			const Vector3 dir = (to.pos - vtx.pos).Normal();
 
 			renderer.m_dbgArrow.SetDirection(vtx.pos + Vector3(0, 1, 0)
@@ -140,18 +140,20 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 	m_textMgr2.NewFrame();
 	if (m_showEdgeWeight)
 	{
-		for (int i = 0; i < ai::sVertex::MAX_VERTEX; ++i)
+		for (int i = 0; i < ai::cPathFinder::sVertex::MAX_VERTEX; ++i)
 		{
-			for (int k = 0; k < ai::sVertex::MAX_VERTEX; ++k)
+			for (int k = 0; k < ai::cPathFinder::sVertex::MAX_VERTEX; ++k)
 			{
-				if (ai::g_edges_len[i][k] <= 0)
-					continue;
-
 				auto &vtx1 = pathEdit.m_pathFinder.m_vertices[i];
 				auto &vtx2 = pathEdit.m_pathFinder.m_vertices[k];
 				const Vector3 center = (vtx1.pos + vtx2.pos) * 0.5f;
 
-				const float val = ai::g_edges_len[i][k];
+				//const float val = ai::g_edges_len[i][k];
+				const int edgeKey = ai::cPathFinder::MakeEdgeKey(i, k);
+				auto it = pathEdit.m_pathFinder.m_lenSet.find(edgeKey);
+				if (pathEdit.m_pathFinder.m_lenSet.end() == it)
+					continue;
+				const float val = it->second;
 
 				Transform tfm;
 				tfm.pos = center;
@@ -159,7 +161,7 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 				tfm.scale = Vector3(1, 1, 1)*0.5f;
 				WStrId strId;
 				strId.Format(L"%.3f", val);
-				m_textMgr2.AddTextRender(renderer, i*ai::sVertex::MAX_VERTEX + k, strId.c_str()
+				m_textMgr2.AddTextRender(renderer, i*ai::cPathFinder::sVertex::MAX_VERTEX + k, strId.c_str()
 					, cColor(1.f, 0.f, 0.f)
 					, cColor(0.f, 0.f, 0.f)
 					, BILLBOARD_TYPE::ALL_AXIS
@@ -424,7 +426,7 @@ void cPathMapView::OnMouseDown(const sf::Mouse::Button &button, const POINT mous
 		{
 			if (eEditVehicle::Vertex == pathEdit.m_editVehicleType)
 			{
-				ai::sVertex vtx;
+				ai::cPathFinder::sVertex vtx;
 				vtx.pos = m_groundPlane1.Pick(ray.orig, ray.dir);
 				vtx.pos.y = g_root.m_terrain.GetHeight(vtx.pos.x, vtx.pos.z);
 				pathEdit.m_pathFinder.AddVertex(vtx);

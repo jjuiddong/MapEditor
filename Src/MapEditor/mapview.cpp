@@ -229,9 +229,9 @@ void cMapView::RenderPathEdit(graphic::cRenderer &renderer, const XMMATRIX &tm)
 		renderer.m_dbgBox.SetBox(bbox);
 		renderer.m_dbgBox.Render(renderer);
 
-		if ((1 <= vtx.type) && (vtx.edge[0] >= 0))
+		if ((1 <= vtx.type) && (vtx.edge[0].to >= 0))
 		{
-			ai::sVertex &to = pathEdit.m_pathFinder.m_vertices[vtx.edge[0]];
+			ai::cPathFinder::sVertex &to = pathEdit.m_pathFinder.m_vertices[vtx.edge[0].to];
 			const Vector3 dir = (to.pos - vtx.pos).Normal();
 
 			renderer.m_dbgArrow.SetDirection(vtx.pos + Vector3(0, 1, 0)
@@ -688,7 +688,7 @@ void cMapView::OnMouseDown(const sf::Mouse::Button &button, const POINT mousePt)
 
 			if (eEditVehicle::Vertex == pathEdit.m_editVehicleType)
 			{
-				ai::sVertex vtx;
+				ai::cPathFinder::sVertex vtx;
 				vtx.pos = m_groundPlane1.Pick(ray.orig, ray.dir);
 				vtx.pos.y = g_root.m_terrain.GetHeight(vtx.pos.x, vtx.pos.z);
 				pathEdit.m_pathFinder.AddVertex(vtx);

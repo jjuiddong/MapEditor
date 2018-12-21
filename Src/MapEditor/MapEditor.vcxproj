@@ -23,7 +23,7 @@
     <ProjectGuid>{5A0C0160-5D1E-4869-B536-08431D550A87}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MapEditor</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

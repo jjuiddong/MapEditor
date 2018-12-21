@@ -46,19 +46,19 @@ void cPathEdit::UpdateLineList(graphic::cRenderer &renderer)
 	// 이 때 사용되는 플래그가 isTwo 다.
 	for (u_int k=0; k < m_pathFinder.m_vertices.size(); ++k)
 	{
-		ai::sVertex &vtx = m_pathFinder.m_vertices[k];
-		for (int i = 0; i < ai::sVertex::MAX_EDGE; ++i)
+		ai::cPathFinder::sVertex &vtx = m_pathFinder.m_vertices[k];
+		for (int i = 0; i < ai::cPathFinder::sVertex::MAX_EDGE; ++i)
 		{
-			if (vtx.edge[i] < 0)
+			if (vtx.edge[i].to < 0)
 				break;
 
-			const int id1 = (k * ai::sVertex::MAX_VERTEX) + vtx.edge[i];
-			const int id2 = (vtx.edge[i] * ai::sVertex::MAX_VERTEX) + k;
+			const int id1 = (k * ai::cPathFinder::sVertex::MAX_VERTEX) + vtx.edge[i].to;
+			const int id2 = (vtx.edge[i].to * ai::cPathFinder::sVertex::MAX_VERTEX) + k;
 			const auto it1 = vertices.find(id1);
 			const auto it2 = vertices.find(id2);
 			const bool isTwo = (it1 != vertices.end()) || (it2 != vertices.end());
 
-			ai::sVertex &vtx2 = m_pathFinder.m_vertices[vtx.edge[i]];
+			ai::cPathFinder::sVertex &vtx2 = m_pathFinder.m_vertices[vtx.edge[i].to];
 
 			Vector3 offset2;
 			if (isTwo)
@@ -89,22 +89,22 @@ bool cPathEdit::CheckVertexConnection(
 	std::set<int> vertices; // key = vertex1 id * MAX_VERTEX + vertex2 id
 	for (u_int k = 0; k < m_pathFinder.m_vertices.size(); ++k)
 	{
-		ai::sVertex &vtx = m_pathFinder.m_vertices[k];
-		for (int i = 0; i < ai::sVertex::MAX_EDGE; ++i)
+		ai::cPathFinder::sVertex &vtx = m_pathFinder.m_vertices[k];
+		for (int i = 0; i < ai::cPathFinder::sVertex::MAX_EDGE; ++i)
 		{
-			if (vtx.edge[i] < 0)
+			if (vtx.edge[i].to < 0)
 				break;
 
-			const int nextId =vtx.edge[i];
-			ai::sVertex &vtx2 = m_pathFinder.m_vertices[nextId];
+			const int nextId =vtx.edge[i].to;
+			ai::cPathFinder::sVertex &vtx2 = m_pathFinder.m_vertices[nextId];
 
 			bool isMatch = false;
-			for (int m = 0; m < ai::sVertex::MAX_EDGE; ++m)
+			for (int m = 0; m < ai::cPathFinder::sVertex::MAX_EDGE; ++m)
 			{
-				if (vtx2.edge[m] < 0)
+				if (vtx2.edge[m].to < 0)
 					break;
 
-				if (k == vtx2.edge[m])
+				if (k == vtx2.edge[m].to)
 				{
 					isMatch = true;
 					break;
@@ -186,15 +186,15 @@ void cPathEdit::Render(graphic::cRenderer &renderer)
 			ImGui::SameLine(150);
 
 			const bool isRemove = ImGui::Button("Remove");
-			ai::sVertex &vtx = m_pathFinder.m_vertices[m_selectVertex];
+			ai::cPathFinder::sVertex &vtx = m_pathFinder.m_vertices[m_selectVertex];
 
 			ImGui::InputInt("type", &vtx.type);
 			ImGui::DragFloat3("pos", (float*)&vtx.pos, 0.01f);
 			ImGui::Spacing();
 
-			for (int i = 0; i < ai::sVertex::MAX_EDGE; ++i)
+			for (int i = 0; i < ai::cPathFinder::sVertex::MAX_EDGE; ++i)
 			{
-				if (vtx.edge[i] < 0)
+				if (vtx.edge[i].to < 0)
 					break;
 
 				const ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
@@ -204,7 +204,7 @@ void cPathEdit::Render(graphic::cRenderer &renderer)
 				ImGui::SameLine(100);
 				if (ImGui::Button(format("Remove-%d", i).c_str())) // remove edge  (rotation left)
 				{
-					m_pathFinder.RemoveEdgeEachOther(m_selectVertex, vtx.edge[i]);
+					m_pathFinder.RemoveEdgeEachOther(m_selectVertex, vtx.edge[i].to);
 					UpdateLineList(renderer);
 				}
 			}

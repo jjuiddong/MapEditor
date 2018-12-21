@@ -162,7 +162,7 @@ void cTruck::NextRandomMove()
 	if (!m_tms)
 		return;
 
-	vector<ai::sVertex*> targets;
+	vector<ai::cPathFinder::sVertex*> targets;
 	for (auto &vtx : m_tms->m_pathFinder.m_vertices)
 		if (1 == vtx.type)
 			targets.push_back(&vtx);
