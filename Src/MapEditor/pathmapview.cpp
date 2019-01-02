@@ -140,19 +140,27 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 	m_textMgr2.NewFrame();
 	if (m_showEdgeWeight)
 	{
-		for (int i = 0; i < ai::cPathFinder::sVertex::MAX_VERTEX; ++i)
+		set<int> edgeKeys;
+		for (u_int i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
 		{
-			for (int k = 0; k < ai::cPathFinder::sVertex::MAX_VERTEX; ++k)
+			auto &vertex = pathEdit.m_pathFinder.m_vertices[i];
+
+			for (int k = 0; i < ai::cPathFinder::sVertex::MAX_EDGE; ++k)
 			{
-				auto &vtx1 = pathEdit.m_pathFinder.m_vertices[i];
-				auto &vtx2 = pathEdit.m_pathFinder.m_vertices[k];
+				if (vertex.edge[k].to < 0)
+					break;
+
+				const int from = (const int)i;
+				const int to = vertex.edge[k].to;
+				auto &vtx1 = vertex;
+				auto &vtx2 = pathEdit.m_pathFinder.m_vertices[to];
 				const Vector3 center = (vtx1.pos + vtx2.pos) * 0.5f;
 
-				//const float val = ai::g_edges_len[i][k];
-				const int edgeKey = ai::cPathFinder::MakeEdgeKey(i, k);
+				const int edgeKey = ai::cPathFinder::MakeEdgeKey(from, to);
 				auto it = pathEdit.m_pathFinder.m_lenSet.find(edgeKey);
 				if (pathEdit.m_pathFinder.m_lenSet.end() == it)
 					continue;
+
 				const float val = it->second;
 
 				Transform tfm;
@@ -161,7 +169,7 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 				tfm.scale = Vector3(1, 1, 1)*0.5f;
 				WStrId strId;
 				strId.Format(L"%.3f", val);
-				m_textMgr2.AddTextRender(renderer, i*ai::cPathFinder::sVertex::MAX_VERTEX + k, strId.c_str()
+				m_textMgr2.AddTextRender(renderer, from*ai::cPathFinder::sVertex::MAX_VERTEX + to, strId.c_str()
 					, cColor(1.f, 0.f, 0.f)
 					, cColor(0.f, 0.f, 0.f)
 					, BILLBOARD_TYPE::ALL_AXIS
