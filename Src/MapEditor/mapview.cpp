@@ -77,8 +77,6 @@ void cMapView::OnUpdate(const float deltaSeconds)
 		g_root.m_tCursor.UpdateCursor(renderer, g_root.m_terrain, pos);
 	}
 
-	//g_root.m_tms.Update(renderer, deltaSeconds);
-
 	// Update CursorPos
 	{
 		const Ray ray = GetMainCamera().GetRay(m_mousePos.x, m_mousePos.y);
@@ -98,7 +96,10 @@ void cMapView::RenderScene(cRenderer &renderer
 	g_root.m_terrain.SetTechnique(techniqueName);
 
 	DirectX::CommonStates common(renderer.GetDevice());
-	renderer.GetDevContext()->RSSetState(g_root.m_dbgWindow->m_isShowWireFrame ? common.Wireframe() : common.CullCounterClockwise());
+	renderer.GetDevContext()->RSSetState(g_root.m_dbgWindow->m_isShowWireFrame ? 
+		common.Wireframe() : common.CullCounterClockwise());
+	renderer.GetDevContext()->OMSetDepthStencilState(common.DepthDefault(), 0);
+
 	{
 		if (!g_root.m_dbgWindow->m_isShowWireFrame)
 			g_root.m_skybox.Render(renderer);
@@ -133,30 +134,29 @@ void cMapView::RenderScene(cRenderer &renderer
 	RenderAreaEdit(renderer, tm);
 	RenderLineEdit(renderer, tm);
 	RenderNaviEdit(renderer, tm);
-	//g_root.m_tms.Render(renderer);
 }
 
 
 // Render Outline Selected model
 void cMapView::RenderSelectModel(graphic::cRenderer &renderer, const XMMATRIX &tm)
 {
-	if (g_root.m_selectModel)
-	{
-		CommonStates state(renderer.GetDevice());
-		renderer.GetDevContext()->OMSetDepthStencilState(state.DepthNone(), 0);
-		renderer.GetDevContext()->OMSetBlendState(state.NonPremultiplied(), NULL, 0xffffffff);
+	if (!g_root.m_selectModel)
+		return;
 
-		renderer.BindTexture(g_root.m_depthBuff, 7);
-		g_root.m_selectModel->SetTechnique("Outline");
-		Matrix44 parentTm = g_root.m_selectModel->GetParentWorldMatrix();
-		g_root.m_selectModel->Render(renderer, parentTm.GetMatrixXM());
+	CommonStates state(renderer.GetDevice());
+	renderer.GetDevContext()->OMSetDepthStencilState(state.DepthNone(), 0);
+	renderer.GetDevContext()->OMSetBlendState(state.NonPremultiplied(), NULL, 0xffffffff);
 
-		if (g_root.m_terrainEditWindow->m_modelEdit.m_showAxis)
-			renderer.m_dbgAxis.Render(renderer, g_root.m_selectModel->GetWorldMatrix().GetMatrixXM());
+	renderer.BindTexture(g_root.m_depthBuff, 7);
+	g_root.m_selectModel->SetTechnique("Outline");
+	Matrix44 parentTm = g_root.m_selectModel->GetParentWorldMatrix();
+	g_root.m_selectModel->Render(renderer, parentTm.GetMatrixXM());
 
-		renderer.GetDevContext()->OMSetDepthStencilState(state.DepthDefault(), 0);
-		renderer.GetDevContext()->OMSetBlendState(state.Opaque(), NULL, 0xffffffff);
-	}
+	if (g_root.m_terrainEditWindow->m_modelEdit.m_showAxis)
+		renderer.m_dbgAxis.Render(renderer, g_root.m_selectModel->GetWorldMatrix().GetMatrixXM());
+
+	renderer.GetDevContext()->OMSetDepthStencilState(state.DepthDefault(), 0);
+	renderer.GetDevContext()->OMSetBlendState(state.Opaque(), NULL, 0xffffffff);
 }
 
 
@@ -229,17 +229,17 @@ void cMapView::RenderPathEdit(graphic::cRenderer &renderer, const XMMATRIX &tm)
 		renderer.m_dbgBox.SetBox(bbox);
 		renderer.m_dbgBox.Render(renderer);
 
-		if ((1 <= vtx.type) && (vtx.edge[0].to >= 0))
-		{
-			ai::cPathFinder::sVertex &to = pathEdit.m_pathFinder.m_vertices[vtx.edge[0].to];
-			const Vector3 dir = (to.pos - vtx.pos).Normal();
+		//if ((1 <= vtx.type) && (vtx.edge[0].to >= 0))
+		//{
+		//	ai::cPathFinder::sVertex &to = pathEdit.m_pathFinder.m_vertices[vtx.edge[0].to];
+		//	const Vector3 dir = (to.pos - vtx.pos).Normal();
 
-			renderer.m_dbgArrow.SetDirection(vtx.pos + Vector3(0, 1, 0)
-				, vtx.pos + dir + Vector3(0, 1, 0)
-				, 0.1f
-			);
-			renderer.m_dbgArrow.Render(renderer);
-		}
+		//	renderer.m_dbgArrow.SetDirection(vtx.pos + Vector3(0, 1, 0)
+		//		, vtx.pos + dir + Vector3(0, 1, 0)
+		//		, 0.1f
+		//	);
+		//	renderer.m_dbgArrow.Render(renderer);
+		//}
 	}
 
 	pathEdit.m_lineList.Render(renderer);
@@ -718,8 +718,6 @@ void cMapView::OnMouseDown(const sf::Mouse::Button &button, const POINT mousePt)
 			{
 				const Vector3 pos = m_groundPlane1.Pick(ray.orig, ray.dir);
 				pathEdit.m_editVehicleStartPoint = pos;
-				//g_root.m_tms.m_trucks.front()->m_transform.pos = pos;
-				//g_root.m_tms.m_trucks.front()->Move(g_root.m_dbgWindow->m_editVehicleEndPoint);
 			}
 		}
 		//
@@ -770,7 +768,6 @@ void cMapView::OnMouseDown(const sf::Mouse::Button &button, const POINT mousePt)
 			{
 				const Vector3 pos = m_groundPlane1.Pick(ray.orig, ray.dir);
 				pathEdit.m_editVehicleEndPoint = pos;
-				//g_root.m_tms.m_trucks.front()->Move(pathEdit.m_editVehicleEndPoint);
 			}
 		}
 		//

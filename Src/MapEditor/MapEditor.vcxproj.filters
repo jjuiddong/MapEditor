@@ -3,57 +3,158 @@
   <ItemGroup>
     <ClCompile Include="mapeditor.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="cctv.cpp" />
     <ClCompile Include="CFW1StateSaver.cpp" />
-    <ClCompile Include="componentwindow.cpp" />
-    <ClCompile Include="dbgwindow.cpp" />
-    <ClCompile Include="geometryedit.cpp" />
-    <ClCompile Include="gridedit.cpp" />
-    <ClCompile Include="hierarchywindow.cpp" />
-    <ClCompile Include="jobmanager.cpp" />
-    <ClCompile Include="lightedit.cpp" />
-    <ClCompile Include="mapview.cpp" />
-    <ClCompile Include="modeledit.cpp" />
-    <ClCompile Include="naviedit.cpp" />
-    <ClCompile Include="pathedit.cpp" />
-    <ClCompile Include="patheditwindow.cpp" />
-    <ClCompile Include="pathmapview.cpp" />
-    <ClCompile Include="pathmesh.cpp" />
-    <ClCompile Include="resourceviewer.cpp" />
-    <ClCompile Include="resourcewindow.cpp" />
     <ClCompile Include="root.cpp" />
-    <ClCompile Include="terraineditwindow.cpp" />
     <ClCompile Include="terrainloader2.cpp" />
-    <ClCompile Include="tms.cpp" />
-    <ClCompile Include="truck.cpp" />
-    <ClCompile Include="vehiclepath.cpp" />
+    <ClCompile Include="dbgwindow.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="geometryedit.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="gridedit.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="hierarchywindow.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="lightedit.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="modeledit.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="mapview.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceviewer.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="resourcewindow.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="terraineditwindow.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="pathedit.cpp">
+      <Filter>path</Filter>
+    </ClCompile>
+    <ClCompile Include="patheditwindow.cpp">
+      <Filter>path</Filter>
+    </ClCompile>
+    <ClCompile Include="pathmapview.cpp">
+      <Filter>path</Filter>
+    </ClCompile>
+    <ClCompile Include="naviedit.cpp">
+      <Filter>path</Filter>
+    </ClCompile>
+    <ClCompile Include="componentwindow.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="pathmesh.cpp">
+      <Filter>path</Filter>
+    </ClCompile>
+    <ClCompile Include="vehiclepath.cpp">
+      <Filter>path</Filter>
+    </ClCompile>
+    <ClCompile Include="component\cctv.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="component\palete.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="component\box.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="component\rack.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
+    <ClCompile Include="component\racker.cpp">
+      <Filter>component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="mapeditor.h" />
-    <ClInclude Include="cctv.h" />
     <ClInclude Include="CFW1StateSaver.h" />
-    <ClInclude Include="componentwindow.h" />
-    <ClInclude Include="dbgwindow.h" />
-    <ClInclude Include="geometryedit.h" />
-    <ClInclude Include="gridedit.h" />
-    <ClInclude Include="hierarchywindow.h" />
-    <ClInclude Include="jobmanager.h" />
-    <ClInclude Include="lightedit.h" />
-    <ClInclude Include="mapview.h" />
-    <ClInclude Include="modeledit.h" />
-    <ClInclude Include="naviedit.h" />
-    <ClInclude Include="pathedit.h" />
-    <ClInclude Include="patheditwindow.h" />
-    <ClInclude Include="pathmapview.h" />
-    <ClInclude Include="pathmesh.h" />
-    <ClInclude Include="resourceviewer.h" />
-    <ClInclude Include="resourcewindow.h" />
     <ClInclude Include="root.h" />
-    <ClInclude Include="terraineditwindow.h" />
     <ClInclude Include="terrainloader2.h" />
-    <ClInclude Include="tms.h" />
-    <ClInclude Include="truck.h" />
-    <ClInclude Include="vehiclepath.h" />
+    <ClInclude Include="dbgwindow.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="geometryedit.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="gridedit.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="hierarchywindow.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="lightedit.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="modeledit.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="mapview.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="resourceviewer.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="resourcewindow.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="terraineditwindow.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="pathedit.h">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="patheditwindow.h">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="pathmapview.h">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="naviedit.h">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="componentwindow.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="pathmesh.h">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="vehiclepath.h">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="component\cctv.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="component\palete.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="component\box.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="component\rack.h">
+      <Filter>component</Filter>
+    </ClInclude>
+    <ClInclude Include="component\racker.h">
+      <Filter>component</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="view">
+      <UniqueIdentifier>{aaf1ef18-264c-4909-9e72-ff82ef853005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="component">
+      <UniqueIdentifier>{cc4935f7-b442-40dc-a02c-bc957063de62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="path">
+      <UniqueIdentifier>{b2f9a9d3-f71a-43e6-a7ed-deb5b8f1028d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

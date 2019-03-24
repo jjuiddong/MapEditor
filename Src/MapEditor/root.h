@@ -13,7 +13,6 @@
 #include "hierarchywindow.h"
 #include "componentwindow.h"
 #include "pathmapview.h"
-#include "tms.h"
 
 
 struct eMapEditType {
@@ -50,7 +49,6 @@ public:
 	graphic::cSkyBoxCube m_skybox;
 	graphic::cTerrain m_terrain;
 	graphic::cTerrainCursor m_tCursor;
-	tms::cTms m_tms;
 	graphic::cCamera3D m_camWorld; // World Camera
 	graphic::cCamera3D m_camObserver; // Observer World Camera
 

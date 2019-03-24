@@ -29,7 +29,19 @@ void cModelEdit::Render()
 		Transform transformL = selectModel->m_transform;
 
 		ImGui::Spacing();
-		ImGui::InputText("Name", selectModel->m_name.m_str, ARRAYSIZE(selectModel->m_name.m_str));
+		ImGui::PushItemWidth(150);
+		if (ImGui::InputText("Name", selectModel->m_name.m_str, ARRAYSIZE(selectModel->m_name.m_str)))
+		{
+			cRacker *racker = (cRacker*)dynamic_cast<cRacker*>(selectModel);
+			if (racker)
+				racker->m_wName = racker->m_name.wstr();
+		}
+
+		ImGui::PopItemWidth();
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.f, 0, 1));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.f, 0, 1));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.f, 0, 1));
 		ImGui::SameLine();
 		if (ImGui::Button("Delete"))
 		{
@@ -38,9 +50,11 @@ void cModelEdit::Render()
 				selectModel->m_parent->RemoveChild(selectModel);
 				g_root.m_selectModel = NULL;
 				g_root.m_gizmo->Cancel();
+				selectModel = NULL;
 			}
-			return;
 		}
+		ImGui::PopStyleColor(3);
+		RET(!selectModel);
 
 		ImGui::Checkbox("Show Model", &selectModel->m_isEnable);
 		ImGui::Checkbox("Show Axis", &m_showAxis);
@@ -85,6 +99,10 @@ void cModelEdit::Render()
 			Vector4 color = line->m_color.GetColor();
 			if (ImGui::ColorEdit4("Color", (float*)&color))
 				line->m_color.SetColor(color);
+		}
+		else if (cRacker *racker = (cRacker*)dynamic_cast<cRacker*>(selectModel))
+		{
+			
 		}
 
 		if (edit3)

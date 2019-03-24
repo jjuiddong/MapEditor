@@ -10,7 +10,9 @@ using namespace common;
 #include <shobjidl.h> 
 #include "root.h"
 #include "CFW1StateSaver.h"
-#include "cctv.h"
+#include "component/cctv.h"
+#include "component/rack.h"
+#include "component/racker.h"
 
 extern cRoot g_root;
 

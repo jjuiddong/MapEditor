@@ -90,8 +90,6 @@ bool cRoot::Init()
 
 	m_tCursor.Create(renderer);
 
-	m_tms.Create(renderer);
-
 	cViewport dvp;
 	dvp.Create(0, 0, 1024, 1024, 0, 1);
 	m_depthBuff.Create(renderer, dvp, false);

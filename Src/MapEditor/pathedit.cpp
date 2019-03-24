@@ -32,10 +32,10 @@ bool cPathEdit::Init(graphic::cRenderer &renderer)
 
 void cPathEdit::UpdateLineList(graphic::cRenderer &renderer)
 {
-	if (!CheckVertexConnection())
-	{
-		::MessageBoxA(NULL, "Vertex Connection Error", "Error", MB_OK);
-	}
+	//if (!CheckVertexConnection())
+	//{
+	//	::MessageBoxA(NULL, "Vertex Connection Error", "Error", MB_OK);
+	//}
 
 	std::set<int> vertices; // key = vertex1 id * MAX_VERTEX + vertex2 id
 
@@ -79,8 +79,8 @@ void cPathEdit::UpdateLineList(graphic::cRenderer &renderer)
 }
 
 
-// 버텍스간의 연결은 항상 서로 상호 참조를 해야한다.
-// 한쪽만 연결되어 있다면, 잘 못된 것이다.
+// 버텍스간 양방향 연결 체크
+// 단방향으로 연결되었을 경우 false를 리턴한다.
 bool cPathEdit::CheckVertexConnection(
 	const bool isLog //=true
 )
@@ -133,7 +133,10 @@ void cPathEdit::Render(graphic::cRenderer &renderer)
 	if (ImGui::CollapsingHeader("Vehicle Path"))
 	{
 		ImGui::Spacing();
-		ImGui::PushID(10); ImGui::InputText("", m_fileName.m_str, ARRAYSIZE(m_fileName.m_str)); ImGui::PopID();
+		ImGui::PushID(10); 
+		ImGui::InputText("", m_fileName.m_str, ARRAYSIZE(m_fileName.m_str));
+		ImGui::PopID();
+
 		ImGui::SameLine(); 
 		ImGui::PushID(11);
 		if (ImGui::Button("Read"))

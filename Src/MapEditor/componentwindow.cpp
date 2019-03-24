@@ -132,6 +132,43 @@ void cComponentWindow::OnRender(const float deltaSeconds)
 			}
 		}
 
+		ImGui::SameLine();
+		if (ImGui::Button("Rack", btnSize))
+		{
+			const Ray ray = g_root.m_camWorld.GetRay();
+			Plane ground(Vector3(0, 1, 0), 0);
+			const Vector3 pos = ground.Pick(ray.orig, ray.dir);
+
+			cRacker *racker = new cRacker();
+			racker->Create(renderer, "Rack");
+
+			cRack::sRackInfo rackInfo;
+			rackInfo.name = "A1";
+			rackInfo.pos = Vector3(0,0,0);
+			rackInfo.dim = Vector3(10, 4, 2);
+			rackInfo.dir = Vector3(0, 0, 1);
+			rackInfo.row = 4;
+			rackInfo.col = 3;
+			const float w = rackInfo.dim.x / (float)rackInfo.col;
+			const float h = rackInfo.dim.y / (float)rackInfo.row;
+			for (int i = 0; i < rackInfo.col; ++i)
+				rackInfo.width[i] = w;
+			for (int i = 0; i < rackInfo.row+1; ++i)
+				rackInfo.height[i] = h;
+			rackInfo.pillarSize = 0.05f;
+			rackInfo.beamSize = 0.08f;
+			rackInfo.color = true;
+			rackInfo.shadow = true;
+
+			cRack *rack = new cRack();
+			rack->Create(rackInfo);
+
+			racker->AddRack(renderer, rack);
+			racker->Optimize(renderer);
+
+			g_root.m_hierarchyWindow->AddModel(racker);
+		}
+
 		ImGui::TreePop();
 	}
 }

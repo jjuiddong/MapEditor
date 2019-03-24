@@ -27,6 +27,7 @@ INIT_FRAMEWORK3(cMapEditor);
 cMapEditor::cMapEditor()
 {
 	m_windowName = L"MapEditor";
+	m_isLazyMode = true;
 	const float scale = 1.f;
 	const RECT r = { 0, 0, (int)(1280 * scale), (int)(1024 * scale) };
 	m_windowRect = r;

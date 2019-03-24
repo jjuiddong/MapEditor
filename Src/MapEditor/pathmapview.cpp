@@ -121,17 +121,18 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 				, tfm);
 		}
 
-		if ((1 <= vtx.type) && (vtx.edge[0].to >= 0))
-		{
-			ai::cPathFinder::sVertex &to = pathEdit.m_pathFinder.m_vertices[vtx.edge[0].to];
-			const Vector3 dir = (to.pos - vtx.pos).Normal();
+		// special render
+		//if ((1 <= vtx.type) && (vtx.edge[0].to >= 0))
+		//{
+		//	ai::cPathFinder::sVertex &to = pathEdit.m_pathFinder.m_vertices[vtx.edge[0].to];
+		//	const Vector3 dir = (to.pos - vtx.pos).Normal();
 
-			renderer.m_dbgArrow.SetDirection(vtx.pos + Vector3(0, 1, 0)
-				, vtx.pos + dir + Vector3(0, 1, 0)
-				, 0.1f
-			);
-			renderer.m_dbgArrow.Render(renderer);
-		}
+		//	renderer.m_dbgArrow.SetDirection(vtx.pos + Vector3(0, 1, 0)
+		//		, vtx.pos + dir + Vector3(0, 1, 0)
+		//		, 0.1f
+		//	);
+		//	renderer.m_dbgArrow.Render(renderer);
+		//}
 	}
 	m_textMgr.Render(renderer);
 	pathEdit.m_lineList.Render(renderer);

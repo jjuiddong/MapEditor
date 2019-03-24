@@ -154,14 +154,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cctv.cpp" />
     <ClCompile Include="CFW1StateSaver.cpp" />
     <ClCompile Include="componentwindow.cpp" />
+    <ClCompile Include="component\box.cpp" />
+    <ClCompile Include="component\cctv.cpp" />
+    <ClCompile Include="component\palete.cpp" />
+    <ClCompile Include="component\rack.cpp" />
+    <ClCompile Include="component\racker.cpp" />
     <ClCompile Include="dbgwindow.cpp" />
     <ClCompile Include="geometryedit.cpp" />
     <ClCompile Include="gridedit.cpp" />
     <ClCompile Include="hierarchywindow.cpp" />
-    <ClCompile Include="jobmanager.cpp" />
     <ClCompile Include="lightedit.cpp" />
     <ClCompile Include="mapeditor.cpp" />
     <ClCompile Include="mapview.cpp" />
@@ -180,19 +183,20 @@
     </ClCompile>
     <ClCompile Include="terraineditwindow.cpp" />
     <ClCompile Include="terrainloader2.cpp" />
-    <ClCompile Include="tms.cpp" />
-    <ClCompile Include="truck.cpp" />
     <ClCompile Include="vehiclepath.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cctv.h" />
     <ClInclude Include="CFW1StateSaver.h" />
     <ClInclude Include="componentwindow.h" />
+    <ClInclude Include="component\box.h" />
+    <ClInclude Include="component\cctv.h" />
+    <ClInclude Include="component\palete.h" />
+    <ClInclude Include="component\rack.h" />
+    <ClInclude Include="component\racker.h" />
     <ClInclude Include="dbgwindow.h" />
     <ClInclude Include="geometryedit.h" />
     <ClInclude Include="gridedit.h" />
     <ClInclude Include="hierarchywindow.h" />
-    <ClInclude Include="jobmanager.h" />
     <ClInclude Include="lightedit.h" />
     <ClInclude Include="mapeditor.h" />
     <ClInclude Include="mapview.h" />
@@ -208,8 +212,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="terraineditwindow.h" />
     <ClInclude Include="terrainloader2.h" />
-    <ClInclude Include="tms.h" />
-    <ClInclude Include="truck.h" />
     <ClInclude Include="vehiclepath.h" />
   </ItemGroup>
   <ItemGroup>
