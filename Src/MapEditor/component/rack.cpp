@@ -38,6 +38,7 @@ bool cRack::Create(const sRackInfo &info)
 	dim.x = 0.f;
 	for (int i = 0; i < info.col; ++i)
 		dim.x += info.width[i];
+	m_info.dim = dim;
 
 	const Vector3 pos(0, 0, 0);// = info.pos;
 	const int row = info.row;

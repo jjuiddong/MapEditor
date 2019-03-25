@@ -129,10 +129,10 @@ void cModelEdit::Render()
 					isEditRack = true;
 				}
 
-				if (ImGui::DragFloat("PillarSize", &rack->m_info.pillarSize, 0.001f, 0.01f))
+				if (ImGui::DragFloat("PillarSize", &rack->m_info.pillarSize, 0.001f, 0.01f, 1.f))
 					isEditRack = true;
 
-				if (ImGui::DragFloat("BeamSize", &rack->m_info.beamSize, 0.001f, 0.01f))
+				if (ImGui::DragFloat("BeamSize", &rack->m_info.beamSize, 0.001f, 0.01f, 1.f))
 					isEditRack = true;
 
 				ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
