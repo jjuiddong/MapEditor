@@ -34,7 +34,11 @@ bool cRack::Create(const sRackInfo &info)
 
 	m_info.dir = info.dir.MultiplyNormal(tm); // Update Direction with Rotation
 
-	const Vector3 dim = info.dim;
+	Vector3 dim = info.dim;
+	dim.x = 0.f;
+	for (int i = 0; i < info.col; ++i)
+		dim.x += info.width[i];
+
 	const Vector3 pos(0, 0, 0);// = info.pos;
 	const int row = info.row;
 	const bool isColor = info.color;

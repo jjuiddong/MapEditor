@@ -151,9 +151,9 @@ void cComponentWindow::OnRender(const float deltaSeconds)
 			rackInfo.col = 3;
 			const float w = rackInfo.dim.x / (float)rackInfo.col;
 			const float h = rackInfo.dim.y / (float)rackInfo.row;
-			for (int i = 0; i < rackInfo.col; ++i)
+			for (int i = 0; i < ARRAYSIZE(rackInfo.width); ++i)
 				rackInfo.width[i] = w;
-			for (int i = 0; i < rackInfo.row+1; ++i)
+			for (int i = 0; i < ARRAYSIZE(rackInfo.height); ++i)
 				rackInfo.height[i] = h;
 			rackInfo.pillarSize = 0.05f;
 			rackInfo.beamSize = 0.08f;

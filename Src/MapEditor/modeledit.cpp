@@ -102,7 +102,68 @@ void cModelEdit::Render()
 		}
 		else if (cRacker *racker = (cRacker*)dynamic_cast<cRacker*>(selectModel))
 		{
-			
+			if (!racker->m_rackes.empty())
+			{
+				cRack *rack = racker->m_rackes.front();
+
+				ImGui::Separator();
+				ImGui::Text("Rack Information");
+				ImGui::Spacing();
+
+				bool isEditRack = false;
+
+				if (ImGui::DragFloat3("Dimension", (float*)&rack->m_info.dim, 0.01f, 0.f))
+				{
+					isEditRack = true;
+				}
+
+				if (ImGui::InputInt("Row-", &rack->m_info.row))
+				{
+					rack->m_info.row = max(rack->m_info.row, 1);
+					isEditRack = true;
+				}
+
+				if (ImGui::InputInt("Col-", &rack->m_info.col))
+				{
+					rack->m_info.col = max(rack->m_info.col, 1);
+					isEditRack = true;
+				}
+
+				if (ImGui::DragFloat("PillarSize", &rack->m_info.pillarSize, 0.001f, 0.01f))
+					isEditRack = true;
+
+				if (ImGui::DragFloat("BeamSize", &rack->m_info.beamSize, 0.001f, 0.01f))
+					isEditRack = true;
+
+				ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
+				if (ImGui::TreeNode("Width"))
+				{
+					for (int i = 0; i < rack->m_info.col; ++i)
+					{
+						StrId width;
+						width.Format("width-%d", i);
+						if (ImGui::DragFloat(width.c_str(), &rack->m_info.width[i], 0.001f, 0.1f, 100.f))
+							isEditRack = true;
+					}
+
+					ImGui::TreePop();
+				}
+
+				// update rack model
+				if (isEditRack)
+				{
+					cRack::sRackInfo rackInfo = rack->m_info;
+					const float h = rackInfo.dim.y / (float)rackInfo.row;
+					for (int i = 0; i < rackInfo.row + 1; ++i)
+						rackInfo.height[i] = h;
+
+					racker->Clear();
+					cRack *newRack = new cRack();
+					newRack->Create(rackInfo);
+					racker->AddRack(g_root.m_mapView->GetRenderer(), newRack);
+					racker->Optimize(g_root.m_mapView->GetRenderer());
+				}
+			}			
 		}
 
 		if (edit3)
