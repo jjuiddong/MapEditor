@@ -11,6 +11,7 @@ cRoot::cRoot()
 	, m_selectTile(NULL)
 	, m_gizmo(NULL)
 	, m_mapEditType(eMapEditType::NORMAL)
+	, m_hWnd(NULL)
 {
 }
 
@@ -49,6 +50,7 @@ bool cRoot::Init()
 	m_skybox.Create(renderer, "../media/terraintextures/sky.dds");
 
 	cRenderWindow *main = cDockManager::Get()->GetMainWindow();
+	m_hWnd = main->getSystemHandle();
 	m_mapView = new cMapView();
 	m_mapView->Create(eDockState::DOCKWINDOW, eDockSlot::TAB, main, NULL);
 	m_mapView->Init();

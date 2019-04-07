@@ -23,23 +23,37 @@ void cHierarchyWindow::OnUpdate(const float deltaSeconds)
 
 void cHierarchyWindow::OnRender(const float deltaSeconds)
 {
+	static bool showAllHierarchy = false;
+	ImGui::Checkbox("Show All", &showAllHierarchy);
+	ImGui::Separator();
+
+	ImGui::Spacing();
+
 	if (ImGui::Button(" + Add Model"))
-	{
 		AddModel();
-	}
 
 	ImGui::Spacing();
 	ImGui::Spacing();
 
 	ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Always);
+	if (showAllHierarchy)
+		RenderAllHierarchy();
+	else
+		RenderModelHierarchy();
+}
+
+
+// show all terrain model
+void cHierarchyWindow::RenderAllHierarchy()
+{
 	if (ImGui::TreeNode((void*)0, "Hierarchy"))
 	{
 		ImGui::SameLine();
 		const bool isExpandTree = ImGui::SmallButton("- Expand Tree");
 
 		bool isClickItem = false;
-		static int selectIdx = -1;
-		for (auto &pnode : g_root.m_terrain.m_children) // parents node
+		static int selectId = -1;
+		for (auto &tile : g_root.m_terrain.m_children) // parents node
 		{
 			if (isExpandTree)
 			{
@@ -47,14 +61,14 @@ void cHierarchyWindow::OnRender(const float deltaSeconds)
 				ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Always);
 			}
 
-			if (ImGui::TreeNode((void*)pnode->m_id, pnode->m_name.utf8().c_str()))
+			if (ImGui::TreeNode((void*)tile->m_id, tile->m_name.utf8().c_str()))
 			{
-				for (auto *cnode : pnode->m_children)
+				for (auto *cnode : tile->m_children)
 				{
-					const ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow 
-						| ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_Leaf 
+					const ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
+						| ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_Leaf
 						| ImGuiTreeNodeFlags_NoTreePushOnOpen
-						| ((cnode->m_id == selectIdx) ? ImGuiTreeNodeFlags_Selected : 0);
+						| ((cnode->m_id == selectId) ? ImGuiTreeNodeFlags_Selected : 0);
 
 					ImGui::TreeNodeEx((void*)(intptr_t)cnode->m_id, node_flags,
 						cnode->m_name.utf8().c_str());
@@ -62,36 +76,69 @@ void cHierarchyWindow::OnRender(const float deltaSeconds)
 					if (!isClickItem && ImGui::IsItemClicked())
 					{
 						isClickItem = true;
-						selectIdx = cnode->m_id;
+						selectId = cnode->m_id;
 						g_root.m_selectModel = cnode;
 						g_root.m_gizmo->SetControlNode(cnode);
 
-						if (cTile *p = dynamic_cast<cTile*>(pnode))
+						if (cTile *p = dynamic_cast<cTile*>(tile))
 							g_root.m_terrainEditWindow->m_gridEdit.SelectTile(p);
 					}
 				}
+
 				ImGui::TreePop();
 			}
 
 			if (!isClickItem && ImGui::IsItemClicked())
 			{
 				isClickItem = true;
-				selectIdx = pnode->m_id;
-				g_root.m_selectModel = pnode;
+				selectId = tile->m_id;
+				g_root.m_selectModel = tile;
 				g_root.m_gizmo->SetControlNode(NULL);
-				if (cTile *p = dynamic_cast<cTile*>(pnode))
+				if (cTile *p = dynamic_cast<cTile*>(tile))
 					g_root.m_terrainEditWindow->m_gridEdit.SelectTile(p);
 			}
-
 		}
-
 		ImGui::TreePop();
 	}
 }
 
 
-void cHierarchyWindow::OnEventProc(const sf::Event &evt)
+// show model only
+void cHierarchyWindow::RenderModelHierarchy()
 {
+	if (ImGui::TreeNode((void*)0, "Hierarchy"))
+	{
+		bool isClickItem = false;
+		static int selectId = -1;
+		for (auto &tile : g_root.m_terrain.m_children) // parents node
+		{
+			for (auto *cnode : tile->m_children)
+			{
+				if (cnode->m_name == "Ground")
+					continue; // ignore grid model
+
+				const ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow
+					| ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_Leaf
+					| ImGuiTreeNodeFlags_NoTreePushOnOpen
+					| ((cnode->m_id == selectId) ? ImGuiTreeNodeFlags_Selected : 0);
+
+				ImGui::TreeNodeEx((void*)(intptr_t)cnode->m_id, node_flags,
+					cnode->m_name.utf8().c_str());
+
+				if (!isClickItem && ImGui::IsItemClicked())
+				{
+					isClickItem = true;
+					selectId = cnode->m_id;
+					g_root.m_selectModel = cnode;
+					g_root.m_gizmo->SetControlNode(cnode);
+
+					if (cTile *p = dynamic_cast<cTile*>(tile))
+						g_root.m_terrainEditWindow->m_gridEdit.SelectTile(p);
+				}
+			}
+		}
+		ImGui::TreePop();
+	}
 }
 
 
@@ -109,6 +156,7 @@ bool cHierarchyWindow::AddModel()
 		)
 	{
 		// error
+		::MessageBoxA(g_root.m_hWnd, "No Select Model in Resource Window", "Error", MB_OK);
 		return false;
 	}
 	else

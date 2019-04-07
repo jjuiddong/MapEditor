@@ -13,9 +13,13 @@ public:
 
 	virtual void OnUpdate(const float deltaSeconds) override;
 	virtual void OnRender(const float deltaSeconds) override;
-	virtual void OnEventProc(const sf::Event &evt) override;
 	void Clear();
 
 	bool AddModel();
 	bool AddModel(graphic::cNode *node);
+
+
+protected:
+	void RenderAllHierarchy();
+	void RenderModelHierarchy();
 };

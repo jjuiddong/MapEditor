@@ -34,6 +34,7 @@ public:
 
 
 public:
+	HWND m_hWnd;
 	cMapView *m_mapView;
 	cPathMapView *m_pathMapView;
 	cTerrainEditWindow *m_terrainEditWindow;

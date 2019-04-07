@@ -36,7 +36,6 @@ void cModelEdit::Render()
 			if (racker)
 				racker->m_wName = racker->m_name.wstr();
 		}
-
 		ImGui::PopItemWidth();
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.6f, 0.f, 0, 1));
@@ -62,8 +61,8 @@ void cModelEdit::Render()
 
 		Transform transformW = selectModel->GetWorldTransform();
 
-		const bool edit1 = ImGui::DragFloat3("PosL", (float*)&transformL.pos, 0.1f);
-		const bool edit2 = ImGui::DragFloat3("PosW (read only)", (float*)&transformW.pos, 0.1f);
+		const bool edit1 = ImGui::DragFloat3("Pos Local", (float*)&transformL.pos, 0.01f);
+		const bool edit2 = ImGui::DragFloat3("Pos World (read only)", (float*)&transformW.pos, 0.01f);
 		const bool edit3 = ImGui::DragFloat3("Scale", (float*)&transformL.scale, 0.001f);
 
 		float angle = transformL.rot.GetRotationAngleXZ();
@@ -73,9 +72,7 @@ void cModelEdit::Render()
 		const bool edit6 = ImGui::DragFloat4("Quaternion (read only)", (float*)&transformL.rot, 0.01f);
 
 		if (edit4)
-		{
 			selectModel->m_transform.rot.Euler2(ryp);
-		}
 
 		if (cModel *mod = dynamic_cast<cModel*>(selectModel))
 			ImGui::DragFloat("Animation Speed", &mod->m_animationSpeed, 0.001f);
@@ -136,7 +133,7 @@ void cModelEdit::Render()
 					isEditRack = true;
 
 				ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
-				if (ImGui::TreeNode("Width"))
+				if (ImGui::TreeNode("Column Width"))
 				{
 					for (int i = 0; i < rack->m_info.col; ++i)
 					{
@@ -166,10 +163,10 @@ void cModelEdit::Render()
 			}			
 		}
 
+		if (edit1)
+			selectModel->m_transform.pos = transformL.pos;
 		if (edit3)
-		{
 			selectModel->m_transform.scale = transformL.scale;
-		}
 
 		ImGui::Spacing();
 	}

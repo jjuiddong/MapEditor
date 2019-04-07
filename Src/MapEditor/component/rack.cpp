@@ -10,6 +10,7 @@ cRack::cRack()
 {
 	m_pillars.reserve(32);
 	m_beams.reserve(256);
+	m_diagBars.reserve(256);
 }
 
 cRack::~cRack()
@@ -73,6 +74,7 @@ bool cRack::Create(const sRackInfo &info)
 	const Vector3 toDir = (pillar4 - pillar1).Normal();
 	const float pillarSize = (info.pillarSize == 0) ? 0.02f : info.pillarSize;
 	const float beamSize = (info.beamSize == 0) ? 0.04f : info.beamSize;
+	const float diagBarSize = (info.beamSize == 0) ? 0.02f : info.beamSize / 2.f;
 
 	// Create Pillar
 	Vector3 p1, p2, p3, p4;
@@ -160,12 +162,12 @@ bool cRack::Create(const sRackInfo &info)
 				Vector3 pt4 = p3 + Vector3(0, 1, 0) * height[k];
 
 				cBoundingBox line1;
-				line1.SetLineBoundingBox(pt1, pt2, beamSize);
+				line1.SetLineBoundingBox(pt1, pt2, diagBarSize);
 				cBoundingBox line2;
-				line2.SetLineBoundingBox(pt3, pt4, beamSize);
+				line2.SetLineBoundingBox(pt3, pt4, diagBarSize);
 
-				m_beams.push_back(line1);
-				m_beams.push_back(line2);
+				m_diagBars.push_back(line1);
+				m_diagBars.push_back(line2);
 			}
 		}
 	}
@@ -196,20 +198,20 @@ bool cRack::Create(const sRackInfo &info)
 			{
 				p1 = pillar1 + Vector3(0, 1, 0) * height[k];
 				p2 = pillar2 + Vector3(0, 1, 0) * height[k];
-				p3 = pillar2 + toDir*info.width[k] + Vector3(0, 1, 0) * height[k];
-				p4 = pillar1 + toDir*info.width[k] + Vector3(0, 1, 0) * height[k];
+				p3 = pillar2 + toDir * info.width[k] + Vector3(0, 1, 0) * height[k];
+				p4 = pillar1 + toDir * info.width[k] + Vector3(0, 1, 0) * height[k];
 
 				p5 = p1 + Vector3(0, 1, 0) * info.height[i];
 				p6 = p2 + Vector3(0, 1, 0) * info.height[i];
 				p7 = p3 + Vector3(0, 1, 0) * info.height[i];
-				p8 = p4 +Vector3(0, 1, 0) * info.height[i];
+				p8 = p4 + Vector3(0, 1, 0) * info.height[i];
 			}
 			else
 			{
 				p1 = p4;
 				p2 = p3;
-				p3 = p2 + toDir*info.width[k];
-				p4 = p1 + toDir*info.width[k];
+				p3 = p2 + toDir * info.width[k];
+				p4 = p1 + toDir * info.width[k];
 
 				p5 = p1 + Vector3(0, 1, 0) * info.height[i];
 				p6 = p2 + Vector3(0, 1, 0) * info.height[i];
@@ -219,11 +221,11 @@ bool cRack::Create(const sRackInfo &info)
 
 			cBoundingBox line;
 			if (0 == (i % 2))
-				line.SetLineBoundingBox(p1, p6, beamSize);
+				line.SetLineBoundingBox(p1, p6, diagBarSize);
 			else
-				line.SetLineBoundingBox(p2, p5, beamSize);
+				line.SetLineBoundingBox(p2, p5, diagBarSize);
 
-			m_beams.push_back(line);
+			m_diagBars.push_back(line);
 
 			height[k] += info.height[i];
 		}
@@ -329,4 +331,5 @@ void cRack::MemClear()
 {
 	m_pillars.clear();
 	m_beams.clear();
+	m_diagBars.clear();
 }

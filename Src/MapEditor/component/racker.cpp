@@ -12,6 +12,8 @@ cRacker::cRacker()
 	, m_boxTex(NULL)
 	, m_isLoad(false)
 	, m_isShowBoxTexture(false)
+	, m_isShowText(true)
+	, m_alpha(1.f)
 {
 }
 
@@ -30,6 +32,8 @@ bool cRacker::Create(cRenderer &renderer, const StrId &name)
 	m_wName = m_name.wstr();
 
 	//m_renderFlags |= eRenderFlag::SHADOW;
+	SetRenderFlag(eRenderFlag::NOALPHABLEND, false);
+	SetRenderFlag(eRenderFlag::ALPHABLEND, true);
 
 	return true;
 }
@@ -78,7 +82,7 @@ bool cRacker::Render(cRenderer &renderer
 	RETV(((m_renderFlags & flags) != flags), false);
 
 	RETV(!m_isLoad, false);
-	
+
 	const XMMATRIX transform = m_transform.GetMatrixXM() * parentTm;
 	
 	{
@@ -97,6 +101,7 @@ bool cRacker::Render(cRenderer &renderer
 		m_rackOptimize.Render(renderer);
 	}
 
+	if (!m_paletes.empty())
 	{
 		cShader11 *shader = renderer.m_shaderMgr.FindShader(m_boxOptimize.m_vtxType);
 		assert(shader);
@@ -126,17 +131,17 @@ bool cRacker::Render(cRenderer &renderer
 	}
 
 	// No Render ShadowMap
-	if (!(flags & eRenderFlag::SHADOW))
+	if (m_isShowText && !(flags & eRenderFlag::SHADOW))
 	{
 		const Matrix44 tm = transform;
 		Transform tfm;
 		tfm.pos = (m_boundingBox.Center() + Vector3(0, m_boundingBox.GetDimension().y, 0)) * tm;
 		tfm.scale = m_transform.scale * 0.3f;
 		renderer.m_textMgr.AddTextRender(renderer, m_id, m_wName.c_str()
-			, cColor(0.f, 1.f, 0.f)
+			, cColor(1.f, 1.f, 1.f)
 			, cColor(0.f, 0.f, 0.f)
-			, BILLBOARD_TYPE::ALL_AXIS
-			, tfm);
+			, BILLBOARD_TYPE::DYN_SCALE
+			, tfm, false, 16, 1, 1.f, 2.f, 8.f);
 	}
 
 	__super::Render(renderer, parentTm, flags);
@@ -218,7 +223,7 @@ cPalete* cRacker::Pick(const Ray &ray
 void cRacker::Optimize(cRenderer &renderer)
 {
 	RackOptimize(renderer);
-	BoxOptimize3(renderer);
+	BoxOptimize(renderer);
 	m_isLoad = true;
 }
 
@@ -236,6 +241,12 @@ void cRacker::RackOptimize(cRenderer &renderer)
 	for (auto &p : m_rackes)
 	{
 		for (auto &b : p->m_beams)
+		{
+			totalVertices += 24;
+			totalFace += 12;
+		}
+
+		for (auto &b : p->m_diagBars)
 		{
 			totalVertices += 24;
 			totalFace += 12;
@@ -267,9 +278,13 @@ void cRacker::RackOptimize(cRenderer &renderer)
 	BYTE *pdstVtx = (BYTE*)&vtxBuff[0];
 	WORD *pdstIdx = (WORD*)&idxBuff[0];
 
-	float val = 0.4f;
-	cColor color(val, val, val, 1.f);
-	Vector4 colorVal = color.GetColor();
+	//const float val = 0.4f;
+	const float val = 0.9f;
+	Vector4 colorVal(val, val, val, 1.f);
+	Vector4 beamColorVal(1,0.15f,0,1);
+	Vector4 diagBarColorVal(0.15f, 0.15f, 1, 1);
+	Vector4 pillarColorVal(0.15f, 0.15f,1,1);
+	colorVal.w = m_alpha;
 	m_rackMtrl.Init(colorVal, colorVal, colorVal);
 
 	int dstVtxCount = 0;
@@ -286,7 +301,29 @@ void cRacker::RackOptimize(cRenderer &renderer)
 				if (vtxType & eVertexType::NORMAL)
 					*(Vector3*)(pdstVtx + normOffset) = g_cubeNormals1[i].MultiplyNormal(tm);
 				if (vtxType & eVertexType::COLOR)
-					*(Vector4*)(pdstVtx + colorOffset) = colorVal;
+					*(Vector4*)(pdstVtx + colorOffset) = beamColorVal;
+
+				pdstVtx += vertexStride;
+			}
+
+			for (int i = 0; i < 36; ++i)
+				*pdstIdx++ = g_cubeIndices1[i] + dstVtxCount;
+
+			dstVtxCount += 24;
+		}
+
+		for (auto &b : p->m_diagBars)
+		{
+			cBoundingBox &bbox = b;
+			const Matrix44 tm = bbox.GetMatrix() * p->m_tm;
+			for (int i = 0; i < 24; ++i)
+			{
+				if ((vtxType & eVertexType::POSITION) || (vtxType & eVertexType::POSITION_RHW))
+					*(Vector3*)(pdstVtx + posOffset) = g_cubeVertices1[i] * tm;
+				if (vtxType & eVertexType::NORMAL)
+					*(Vector3*)(pdstVtx + normOffset) = g_cubeNormals1[i].MultiplyNormal(tm);
+				if (vtxType & eVertexType::COLOR)
+					*(Vector4*)(pdstVtx + colorOffset) = diagBarColorVal;
 
 				pdstVtx += vertexStride;
 			}
@@ -308,7 +345,7 @@ void cRacker::RackOptimize(cRenderer &renderer)
 				if (vtxType & eVertexType::NORMAL)
 					*(Vector3*)(pdstVtx + normOffset) = g_cubeNormals1[i].MultiplyNormal(tm);
 				if (vtxType & eVertexType::COLOR)
-					*(Vector4*)(pdstVtx + colorOffset) = colorVal;
+					*(Vector4*)(pdstVtx + colorOffset) = pillarColorVal;
 
 				pdstVtx += vertexStride;
 			}
@@ -328,7 +365,7 @@ void cRacker::RackOptimize(cRenderer &renderer)
 
 // Box : cCube * 1
 // Vertex + Normal + Diffuse + Texture
-void cRacker::BoxOptimize3(cRenderer &renderer)
+void cRacker::BoxOptimize(cRenderer &renderer)
 {
 	RET(m_boxOptimize.IsLoaded());
 
@@ -347,7 +384,7 @@ void cRacker::BoxOptimize3(cRenderer &renderer)
 		return;
 
 	// Create Optimize Vertex
-	m_boxMtrl.Init(Vector4(1, 1, 1, 1)*1.0f, Vector4(1, 1, 1, 1)*0.9f, Vector4(1, 1, 1, 1)*1.f);
+	m_boxMtrl.Init(Vector4(1, 1, 1, 1)*1.0f, Vector4(1, 1, 1, m_alpha)*0.9f, Vector4(1, 1, 1, 1)*1.f);
 
 	const int vtxType = eVertexType::POSITION | eVertexType::NORMAL | eVertexType::COLOR | eVertexType::TEXTURE0;
 	cVertexLayout vtxLayout;

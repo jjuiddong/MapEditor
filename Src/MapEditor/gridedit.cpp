@@ -63,11 +63,13 @@ void cGridEdit::Render(cRenderer &renderer)
 	{
 		if (ImGui::InputInt("Row", &m_row))
 		{
+			m_row = max(m_row, 1);
 			ChangeGrid(renderer, m_row, m_col);
 			g_root.m_cfg.SetValue("Grid-Row", m_row);
 		}
 		if (ImGui::InputInt("Col", &m_col))
 		{
+			m_col = max(m_col, 1);
 			ChangeGrid(renderer, m_row, m_col);
 			g_root.m_cfg.SetValue("Grid-Col", m_col);
 		}
@@ -245,7 +247,8 @@ void cGridEdit::ChangeGrid(cRenderer &renderer, const int row, const int col)
 			const StrPath fileName = "gray.dds";
 			tile->Create(renderer
 				, common::GenerateId()
-				, fileName.GetFileNameExceptExt().c_str()
+				//, fileName.GetFileNameExceptExt().c_str()
+				, format("Tile%d-%d", x, y).c_str()
 				, y // row
 				, x // col
 				//, rect

@@ -36,12 +36,14 @@ namespace graphic
 
 	protected:
 		void RackOptimize(cRenderer &renderer);
-		void BoxOptimize3(cRenderer &renderer);
+		void BoxOptimize(cRenderer &renderer);
 
 
 	public:
 		bool m_isLoad;
 		bool m_isShowBoxTexture;
+		bool m_isShowText;
+		float m_alpha; // alpha blending
 		WStrId m_wName;
 		vector<cRack*> m_rackes;
 		vector<cPalete*> m_paletes;

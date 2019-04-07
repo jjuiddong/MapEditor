@@ -71,7 +71,6 @@ void cTerrainEditWindow::OnRender(const float deltaSeconds)
 				m_readFileName = path;
 	}
 
-	ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_FirstUseEver);
 	m_gridEdit.Render(renderer);
 	m_geoEdit.Render(renderer);
 	m_pathEdit.Render(renderer);

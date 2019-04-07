@@ -78,6 +78,7 @@ namespace graphic
 
 		vector<cBoundingBox> m_pillars;
 		vector<cBoundingBox> m_beams;
+		vector<cBoundingBox> m_diagBars;
 		cBoundingBox m_boundingBox; // Local Space
 	};
 
