@@ -529,12 +529,7 @@ bool cResourceViewer::LoadResource(const StrPath &fileName)
 {
 	cRenderer &renderer = GetRenderer();
 
-	Str16 ext = fileName.GetFileExt();
-	if ((ext == ".x") || (ext == ".X") 
-		|| (ext == ".dae") || (ext == ".DAE")
-		|| (ext == ".fbx") || (ext == ".FBX")
-		//|| (ext == ".mdx") || (ext == ".MDX")
-		) // model file
+	if (g_root.IsModelExtendsName(fileName.c_str())) // check ext
 	{
 		m_state = eState::MODEL;
 		m_model.Create(renderer, common::GenerateId(), fileName.c_str(), true);

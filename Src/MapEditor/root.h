@@ -29,8 +29,8 @@ class cRoot
 public:
 	cRoot();
 	virtual ~cRoot();
-
 	bool Init();
+	bool IsModelExtendsName(const char *fileName);
 
 
 public:
@@ -58,4 +58,6 @@ public:
 	graphic::cNode *m_selectModel;
 	graphic::cGizmo *m_gizmo; // create from mapview
 	eMapEditType::Enum m_mapEditType;
+
+	vector<string> m_modelExts;
 };

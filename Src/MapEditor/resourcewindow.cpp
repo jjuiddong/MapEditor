@@ -35,11 +35,11 @@ void cResourceWindow::UpdateResourceFile()
 
 		vector<WStr32> exts;
 		exts.reserve(16);
-		exts.push_back(L"bmp"); exts.push_back(L"BMP");
-		exts.push_back(L"jpg"); exts.push_back(L"JPG");
-		exts.push_back(L"tga"); exts.push_back(L"TGA");
-		exts.push_back(L"png"); exts.push_back(L"PNG");
-		exts.push_back(L"dds"); exts.push_back(L"DDS");
+		exts.push_back(L".bmp"); exts.push_back(L".BMP");
+		exts.push_back(L".jpg"); exts.push_back(L".JPG");
+		exts.push_back(L".tga"); exts.push_back(L".TGA");
+		exts.push_back(L".png"); exts.push_back(L".PNG");
+		exts.push_back(L".dds"); exts.push_back(L".DDS");
 		vector<WStr64> ignores;
 		ignores.push_back(L"VWorld");
 		ignores.push_back(L"WorldTerrain");
@@ -57,10 +57,9 @@ void cResourceWindow::UpdateResourceFile()
 
 		vector<WStr32> exts;
 		exts.reserve(8);
-		exts.push_back(L"x"); exts.push_back(L"X");
-		exts.push_back(L"dae"); exts.push_back(L"DAE");
-		exts.push_back(L"fbx"); exts.push_back(L"FBX");
-		//exts.push_back(L"mdx"); exts.push_back(L"MDX");
+		for (auto &ext : g_root.m_modelExts)
+			exts.push_back(str2wstr(ext));
+
 		vector<WStr64> ignores;
 		ignores.push_back(L"VWorld");
 		ignores.push_back(L"WorldTerrain");

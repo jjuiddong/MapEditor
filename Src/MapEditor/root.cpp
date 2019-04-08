@@ -40,6 +40,12 @@ bool cRoot::Init()
 	m_gizmo->Create(renderer);
 	m_gizmo->m_transform.pos = Vector3(10, 10, 10);
 
+	m_modelExts.clear();
+	m_modelExts.push_back(".x"); m_modelExts.push_back(".X");
+	m_modelExts.push_back(".dae"); m_modelExts.push_back(".DAE");
+	m_modelExts.push_back(".fbx"); m_modelExts.push_back(".FBX");
+	m_modelExts.push_back(".3ds"); m_modelExts.push_back(".3DS");
+
 	//cMainCamera::Get()->PushCamera(&m_camWorld); // push maincamera
 	cAutoCam cam(&m_camWorld);
 
@@ -99,3 +105,12 @@ bool cRoot::Init()
 	return true;
 }
 
+
+// check model file extends name
+// for fast app
+bool cRoot::IsModelExtendsName(const char *fileName)
+{
+	auto it = find(m_modelExts.begin(), m_modelExts.end()
+		, common::GetFileExt(fileName));
+	return m_modelExts.end() != it;
+}

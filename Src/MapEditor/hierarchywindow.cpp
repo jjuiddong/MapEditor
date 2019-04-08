@@ -149,11 +149,7 @@ void cHierarchyWindow::Clear()
 
 bool cHierarchyWindow::AddModel()
 {
-	Str16 ext = g_root.m_resWindow->m_selectPath.GetFileExt();
-	if (((ext != ".x") && (ext != ".X"))
-		&& ((ext != ".dae") && (ext != ".DAE"))
-		&& ((ext != ".fbx") && (ext != ".FBX"))
-		)
+	if (!g_root.IsModelExtendsName(g_root.m_resWindow->m_selectPath.c_str())) // check ext
 	{
 		// error
 		::MessageBoxA(g_root.m_hWnd, "No Select Model in Resource Window", "Error", MB_OK);
