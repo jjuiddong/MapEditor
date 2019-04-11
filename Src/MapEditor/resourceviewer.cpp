@@ -256,6 +256,7 @@ void cResourceViewer::RenderModelInfo()
 			}
 		}
 
+		RenderLocalTransformInfo();
 		RenderMeshInfo();
 		RenderAnimationInfo();
 		RenderShader();
@@ -283,10 +284,98 @@ void cResourceViewer::RenderModelNode(const sRawNode &node)
 }
 
 
+// Render Model Local Transform Information
+void cResourceViewer::RenderLocalTransformInfo()
+{
+	if (ImGui::CollapsingHeader("Local Transform"))
+	{
+		ImGui::DragFloat3("Local Pos", (float*)&m_model.m_localTm.pos, 0.001f);
+		ImGui::DragFloat3("Local Scale", (float*)&m_model.m_localTm.scale, 0.001f);
+		Vector3 ryp = m_model.m_localTm.rot.Euler();
+		if (ImGui::DragFloat3("Roll-Yaw-Pitch", (float*)&ryp, 0.001f))
+			m_model.m_localTm.rot.Euler2(ryp);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.5f, 0.5f, 0, 1));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.7f, 0.7f, 0, 1));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.4f, 0, 1));
+		if (ImGui::Button("Save - Model Information"))
+		{
+			WriteModelInfo();
+		}
+		ImGui::PopStyleColor(3);
+	}
+}
+
+
+// filename + .inf 파일에 Mesh Visible, Model LocalTm 정보를 저장한다.
+// format
+//	pos, x, y, z
+//	scale, x, y, z
+//	rot, x, y, z, w
+//  meshvisible, mesh index, 0/1
+bool cResourceViewer::WriteModelInfo()
+{
+	cSimpleData sd;
+
+	vector<string> title;
+	title.push_back("Model Information");
+	
+	vector<string> pos;
+	pos.push_back("pos");
+	pos.push_back(std::to_string(m_model.m_localTm.pos.x));
+	pos.push_back(std::to_string(m_model.m_localTm.pos.y));
+	pos.push_back(std::to_string(m_model.m_localTm.pos.z));
+
+	vector<string> scale;
+	scale.push_back("scale");
+	scale.push_back(std::to_string(m_model.m_localTm.scale.x));
+	scale.push_back(std::to_string(m_model.m_localTm.scale.y));
+	scale.push_back(std::to_string(m_model.m_localTm.scale.z));
+
+	vector<string> rot;
+	rot.push_back("rot");
+	rot.push_back(std::to_string(m_model.m_localTm.rot.x));
+	rot.push_back(std::to_string(m_model.m_localTm.rot.y));
+	rot.push_back(std::to_string(m_model.m_localTm.rot.z));
+	rot.push_back(std::to_string(m_model.m_localTm.rot.w));
+
+	sd.m_table.push_back(title);
+	sd.m_table.push_back(pos);
+	sd.m_table.push_back(scale);
+	sd.m_table.push_back(rot);
+
+	// store mesh invisible
+	for (uint i = 0; i < m_model.m_model->m_meshes.size(); ++i)
+	{
+		auto &mesh = m_model.m_model->m_meshes[i];
+		if (!mesh->IsVisible())
+		{
+			vector<string> invis;
+			invis.push_back("meshvisible");
+			invis.push_back(std::to_string(i));
+			invis.push_back(std::to_string(0)); // invisible mesh
+			sd.m_table.push_back(invis);
+		}
+	}
+
+	return sd.Write((m_model.m_fileName + ".inf").c_str());
+}
+
+
 void cResourceViewer::RenderMeshInfo()
 {
 	if (ImGui::CollapsingHeader("Mesh Information"))
 	{
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.5f, 0.5f, 0, 1));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.7f, 0.7f, 0, 1));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.4f, 0, 1));
+		if (ImGui::Button("Save - Model Information"))
+		{
+			WriteModelInfo();
+		}
+		ImGui::PopStyleColor(3);
+		ImGui::Spacing();
+
 		for (auto &mesh : m_model.m_model->m_meshes)
 		{
 			ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Always);

@@ -45,6 +45,7 @@ bool cRoot::Init()
 	m_modelExts.push_back(".dae"); m_modelExts.push_back(".DAE");
 	m_modelExts.push_back(".fbx"); m_modelExts.push_back(".FBX");
 	m_modelExts.push_back(".3ds"); m_modelExts.push_back(".3DS");
+	m_modelExts.push_back(".stp"); m_modelExts.push_back(".STP");
 
 	//cMainCamera::Get()->PushCamera(&m_camWorld); // push maincamera
 	cAutoCam cam(&m_camWorld);

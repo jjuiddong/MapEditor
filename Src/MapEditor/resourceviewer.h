@@ -23,18 +23,20 @@ public:
 
 
 protected:
+	void AdjustTextureSize();
+	bool IsMouseHoverOnUI();
+	void RenderModelInfo();
+	void RenderModelNode(const graphic::sRawNode &node);
+	void RenderLocalTransformInfo();
+	void RenderMeshInfo();
+	void RenderAnimationInfo();
+	void RenderShader();
+	bool WriteModelInfo();
 	void UpdateLookAt();
 	void OnWheelMove(const float delta, const POINT mousePt);
 	void OnMouseMove(const POINT mousePt);
 	void OnMouseDown(const sf::Mouse::Button &button, const POINT mousePt);
 	void OnMouseUp(const sf::Mouse::Button &button, const POINT mousePt);
-	void AdjustTextureSize();
-	bool IsMouseHoverOnUI();
-	void RenderModelInfo();
-	void RenderModelNode(const graphic::sRawNode &node);
-	void RenderMeshInfo();
-	void RenderAnimationInfo();
-	void RenderShader();
 
 
 public:

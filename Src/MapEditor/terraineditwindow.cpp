@@ -120,6 +120,10 @@ bool cTerrainEditWindow::ReadTerrainFile( graphic::cRenderer &renderer, const St
 		g_root.m_terrainEditWindow->m_gridEdit.m_tiles[tileIdx] = tile;
 	}
 
+	// update title window text
+	cDockManager::Get()->GetMainWindow()->m_title.Format(
+		"- MapEditor - [ %s ]", path.c_str());
+
 	return true;
 }
 
