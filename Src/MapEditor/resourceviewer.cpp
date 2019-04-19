@@ -108,7 +108,7 @@ void cResourceViewer::OnPreRender(const float deltaSeconds)
 		{
 			m_checkLoadModel = m_model.m_isLoad;
 			if (m_model.m_isLoad)
-				m_camera.Move(m_model.m_boundingBox);
+				m_camera.Move(m_model.m_boundingBox * m_model.m_localTm.GetMatrixXM());
 		}
 	}
 
@@ -352,11 +352,82 @@ bool cResourceViewer::WriteModelInfo()
 		{
 			vector<string> invis;
 			invis.push_back("meshvisible");
-			invis.push_back(std::to_string(i));
+			invis.push_back(std::to_string(i)); // mesh index
 			invis.push_back(std::to_string(0)); // invisible mesh
 			sd.m_table.push_back(invis);
 		}
 	}
+
+	// store mesh material
+	// 기존 메터리얼과 다를때만 저장한다.
+	for (uint i = 0; i < m_model.m_model->m_meshes.size(); ++i)
+	{
+		auto &mesh = m_model.m_model->m_meshes[i];
+		if (mesh->m_mtrls.empty())
+			continue;
+
+		{
+			vector<string> mtrl;
+			mtrl.push_back("mesh_material");
+			mtrl.push_back(std::to_string(i)); // mesh index
+			mtrl.push_back("ambient"); // mesh material type
+			auto &color = mesh->m_mtrls[0].m_ambient;
+			mtrl.push_back(std::to_string(color.x));
+			mtrl.push_back(std::to_string(color.y));
+			mtrl.push_back(std::to_string(color.z));
+			mtrl.push_back(std::to_string(color.w));
+			sd.m_table.push_back(mtrl);
+		}
+
+		{
+			vector<string> mtrl;
+			mtrl.push_back("mesh_material");
+			mtrl.push_back(std::to_string(i)); // mesh index
+			mtrl.push_back("diffuse"); // mesh material type
+			auto &color = mesh->m_mtrls[0].m_diffuse;
+			mtrl.push_back(std::to_string(color.x));
+			mtrl.push_back(std::to_string(color.y));
+			mtrl.push_back(std::to_string(color.z));
+			mtrl.push_back(std::to_string(color.w));
+			sd.m_table.push_back(mtrl);
+		}
+
+		{
+			vector<string> mtrl;
+			mtrl.push_back("mesh_material");
+			mtrl.push_back(std::to_string(i)); // mesh index
+			mtrl.push_back("specular"); // mesh material type
+			auto &color = mesh->m_mtrls[0].m_specular;
+			mtrl.push_back(std::to_string(color.x));
+			mtrl.push_back(std::to_string(color.y));
+			mtrl.push_back(std::to_string(color.z));
+			mtrl.push_back(std::to_string(color.w));
+			sd.m_table.push_back(mtrl);
+		}
+
+		{
+			vector<string> mtrl;
+			mtrl.push_back("mesh_material");
+			mtrl.push_back(std::to_string(i)); // mesh index
+			mtrl.push_back("emissive"); // mesh material type
+			auto &color = mesh->m_mtrls[0].m_emissive;
+			mtrl.push_back(std::to_string(color.x));
+			mtrl.push_back(std::to_string(color.y));
+			mtrl.push_back(std::to_string(color.z));
+			mtrl.push_back(std::to_string(color.w));
+			sd.m_table.push_back(mtrl);
+		}
+
+		{
+			vector<string> mtrl;
+			mtrl.push_back("mesh_material");
+			mtrl.push_back(std::to_string(i)); // mesh index
+			mtrl.push_back("power"); // mesh material type
+			mtrl.push_back(std::to_string(mesh->m_mtrls[0].m_power));
+			sd.m_table.push_back(mtrl);
+		}
+		
+	} // ~ store mesh material
 
 	return sd.Write((m_model.m_fileName + ".inf").c_str());
 }
@@ -624,7 +695,7 @@ bool cResourceViewer::LoadResource(const StrPath &fileName)
 		m_model.Create(renderer, common::GenerateId(), fileName.c_str(), true);
 		m_fileSize = fileName.FileSizeStr().c_str();
 	}
-	else
+	else // texture file?
 	{
 		m_state = eState::TEXTURE;
 
