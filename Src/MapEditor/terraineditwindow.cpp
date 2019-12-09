@@ -75,7 +75,7 @@ void cTerrainEditWindow::OnRender(const float deltaSeconds)
 	m_geoEdit.Render(renderer);
 	m_pathEdit.Render(renderer);
 	m_lightEdit.Render(renderer);
-	ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
 	m_modelEdit.Render();
 	m_naviEdit.Render(renderer);
 }

@@ -28,7 +28,7 @@ void cComponentWindow::OnUpdate(const float deltaSeconds)
 
 void cComponentWindow::OnRender(const float deltaSeconds)
 {
-	ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
 	if (ImGui::TreeNode((void*)0, "Component List"))
 	{
 		cRenderer &renderer = GetRenderer();

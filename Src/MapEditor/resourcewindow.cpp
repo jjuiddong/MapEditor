@@ -79,7 +79,7 @@ void cResourceWindow::OnRender(const float deltaSeconds)
 	static ImGuiTextFilter filter;
 	filter.Draw("Search");
 
-	ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::TreeNode((void*)0, "Resource Tree"))
 	{
 		ImGui::SameLine(150);
@@ -92,7 +92,7 @@ void cResourceWindow::OnRender(const float deltaSeconds)
 		int i = 0;
 		bool isOpenPopup = false;
 
-		ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
 		if (ImGui::TreeNode((void*)1, "Model"))
 		{
 			ImGui::Columns(5, "modelcolumns5", false);
@@ -131,7 +131,7 @@ void cResourceWindow::OnRender(const float deltaSeconds)
 		ImGui::Columns(1); // columns initialize
 		ImGui::Separator();
 
-		ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_FirstUseEver);
+		ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
 		if (ImGui::TreeNode((void*)0, "Texture"))
 		{
 			ImGui::Columns(5, "texturecolumns5", false);

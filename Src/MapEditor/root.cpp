@@ -18,8 +18,7 @@ cRoot::cRoot()
 cRoot::~cRoot()
 {
 	m_cfg.Write("config.txt");
-
-	SAFE_DELETE(m_gizmo);
+	Clear();	
 }
 
 
@@ -115,4 +114,11 @@ bool cRoot::IsModelExtendsName(const char *fileName)
 	auto it = find(m_modelExts.begin(), m_modelExts.end()
 		, common::GetFileExt(fileName));
 	return m_modelExts.end() != it;
+}
+
+
+void cRoot::Clear()
+{
+	m_terrain.Clear();
+	SAFE_DELETE(m_gizmo);
 }

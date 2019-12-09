@@ -31,6 +31,7 @@ public:
 	virtual ~cRoot();
 	bool Init();
 	bool IsModelExtendsName(const char *fileName);
+	void Clear();
 
 
 public:

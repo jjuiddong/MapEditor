@@ -193,7 +193,7 @@ void cResourceViewer::OnRender(const float deltaSeconds)
 	bool isOpen = true;
 	ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
 	ImGui::SetNextWindowPos(pos);
-	ImGui::SetNextWindowSize(ImVec2(min(m_viewRect.Width(), 500), m_isOpenHud? m_viewRect.Height() : 110));
+	ImGui::SetNextWindowSize(ImVec2(min(m_viewRect.Width(), 500.f), m_isOpenHud? m_viewRect.Height() : 110.f));
 	ImGui::SetNextWindowBgAlpha(windowAlpha);
 	ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
 	if (ImGui::Begin("Information", &isOpen
@@ -250,7 +250,7 @@ void cResourceViewer::RenderModelInfo()
 		{
 			if (ImGui::TreeNode("Node Hierarchy"))
 			{
-				ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Always);
+				ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Always);
 				RenderModelNode(m_model.m_model->m_nodes[0]);
 				ImGui::TreePop();
 			}
@@ -449,7 +449,7 @@ void cResourceViewer::RenderMeshInfo()
 
 		for (auto &mesh : m_model.m_model->m_meshes)
 		{
-			ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Always);
+			ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Always);
 			if (ImGui::TreeNode(mesh->m_name.c_str()))
 			{
 				bool isVisible = mesh->IsVisible();
@@ -470,7 +470,7 @@ void cResourceViewer::RenderMeshInfo()
 
 				if (!mesh->m_mtrls.empty())
 				{
-					ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Always);
+					ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Always);
 					if (ImGui::TreeNode("Material"))
 					{					
 						ImGui::ColorEdit4("Ambient", (float*)&mesh->m_mtrls[0].m_ambient);
@@ -540,7 +540,7 @@ void cResourceViewer::RenderAnimationInfo()
 		if (m_isEditAnimationTime)
 		{
 			ImGui::DragFloat("Time", &m_model.m_aniIncT, 0.005f);
-			m_model.m_aniIncT = max(0, m_model.m_aniIncT);
+			m_model.m_aniIncT = max(0.f, m_model.m_aniIncT);
 		}
 		ImGui::Text("Start Time : %f", m_model.m_model->m_animation.m_start);
 		ImGui::Text("End Time : %f", m_model.m_model->m_animation.m_end);
@@ -600,7 +600,7 @@ void cResourceViewer::RenderAnimationInfo()
 				Vector3 scale(1, 1, 1);
 				aniNode.GetAnimationResult(m_model.m_aniIncT, pos, rot, scale);
 				
-				ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Once);
+				ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
 
 				Str32 name;
 				if (aniNode.m_boneAni->name.empty())
@@ -760,7 +760,7 @@ void cResourceViewer::UpdateLookAt()
 bool cResourceViewer::IsMouseHoverOnUI()
 {
 	return (ImGui::IsMouseHoveringRect(ImVec2(0, 0)
-		, ImVec2(min(m_viewRect.Width(), 500), m_isOpenHud ? m_viewRect.Height() : 60)
+		, ImVec2(min(m_viewRect.Width(), 500.f), m_isOpenHud ? m_viewRect.Height() : 60.f)
 		, false));
 }
 
@@ -897,7 +897,7 @@ void cResourceViewer::OnEventProc(const sf::Event &evt)
 	switch (evt.type)
 	{
 	case sf::Event::KeyPressed:
-		switch (evt.key.code)
+		switch (evt.key.cmd)
 		{
 		case sf::Keyboard::Return:
 			break;

@@ -37,11 +37,11 @@ void cPathEditWindow::OnRender(const float deltaSeconds)
 	cPathEdit &pathEdit = g_root.m_terrainEditWindow->m_pathEdit;
 	cNaviEdit &naviEdit = g_root.m_terrainEditWindow->m_naviEdit;
 
-	ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
 	pathEdit.Render(renderer);
 	naviEdit.Render(renderer);
 
-	ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextTreeNodeOpen(true, ImGuiCond_FirstUseEver);
 	if (ImGui::CollapsingHeader("Test PathFind"))
 	{
 		ImGui::Spacing();

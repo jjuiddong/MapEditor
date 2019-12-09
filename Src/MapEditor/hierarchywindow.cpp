@@ -35,7 +35,7 @@ void cHierarchyWindow::OnRender(const float deltaSeconds)
 	ImGui::Spacing();
 	ImGui::Spacing();
 
-	ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Always);
+	ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Always);
 	if (showAllHierarchy)
 		RenderAllHierarchy();
 	else
@@ -57,8 +57,8 @@ void cHierarchyWindow::RenderAllHierarchy()
 		{
 			if (isExpandTree)
 			{
-				ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Once);
-				ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Always);
+				ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
+				ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Always);
 			}
 
 			if (ImGui::TreeNode((void*)tile->m_id, tile->m_name.utf8().c_str()))

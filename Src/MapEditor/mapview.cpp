@@ -421,9 +421,9 @@ void cMapView::OnRender(const float deltaSeconds)
 	const float hudH = 145; // 95
 	ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
 	ImGui::SetNextWindowPos(ImVec2(pos.x+5, pos.y));
-	ImGui::SetNextWindowSize(ImVec2(min(m_viewRect.Width(), 400), min(m_viewRect.Height(), hudH)));
+	ImGui::SetNextWindowSize(ImVec2(min(m_viewRect.Width(), 400.f), min(m_viewRect.Height(), hudH)));
 	ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-	if (ImGui::Begin("MapView Information", &isOpen, ImVec2(400, hudH), windowAlpha, flags))
+	if (ImGui::Begin("MapView Information", &isOpen, ImVec2(400.f, hudH), windowAlpha, flags))
 	{
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::Spacing();
@@ -817,7 +817,7 @@ void cMapView::OnEventProc(const sf::Event &evt)
 	switch (evt.type)
 	{
 	case sf::Event::KeyPressed:
-		switch (evt.key.code)
+		switch (evt.key.cmd)
 		{
 		case sf::Keyboard::Return: break;
 		case sf::Keyboard::Space: 

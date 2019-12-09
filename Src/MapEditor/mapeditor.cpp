@@ -31,19 +31,19 @@ cMapEditor::cMapEditor()
 	const float scale = 1.f;
 	const RECT r = { 0, 0, (int)(1280 * scale), (int)(1024 * scale) };
 	m_windowRect = r;
+
+	cResourceManager::Get()->SetMediaDirectory("./media/");
 }
 
 cMapEditor::~cMapEditor()
 {
+	g_root.Clear();
 }
 
 
 bool cMapEditor::OnInit()
 {
 	DragAcceptFiles(m_hWnd, TRUE);
-
-	cResourceManager::Get()->SetMediaDirectory("../media/");
-	m_renderer.m_shaderMgr.SetShaderRootDirectory("D:/Project/Common/Graphic11/shader/");
 
 	dbg::RemoveLog();
 	dbg::RemoveErrLog();
@@ -84,7 +84,7 @@ void cMapEditor::OnEventProc(const sf::Event &evt)
 	switch (evt.type)
 	{
 	case sf::Event::KeyPressed:
-		switch (evt.key.code)
+		switch (evt.key.cmd)
 		{
 		case sf::Keyboard::Escape: close(); break;
 		}

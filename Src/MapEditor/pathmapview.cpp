@@ -256,7 +256,7 @@ void cPathMapView::OnRender(const float deltaSeconds)
 	bool isOpen = true;
 	ImGuiWindowFlags flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse;
 	ImGui::SetNextWindowPos(pos);
-	ImGui::SetNextWindowSize(ImVec2(min(m_viewRect.Width(), 500), 120));
+	ImGui::SetNextWindowSize(ImVec2(min(m_viewRect.Width(), 500.f), 120.f));
 	ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
 	if (ImGui::Begin("Information", &isOpen, ImVec2(500.f, 120.f), windowAlpha, flags))
 	{
@@ -559,7 +559,7 @@ void cPathMapView::OnEventProc(const sf::Event &evt)
 	switch (evt.type)
 	{
 	case sf::Event::KeyPressed:
-		switch (evt.key.code)
+		switch (evt.key.cmd)
 		{
 		case sf::Keyboard::Return:
 			break;
