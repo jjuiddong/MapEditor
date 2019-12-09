@@ -330,3 +330,7 @@ ASALocalRun/
 .mfractor/
 Src/MapEditor/errlog.txt
 Src/MapEditor/log.txt
+Package/errlog.txt
+Package/log.txt
+Package/MapEditord.exe
+Package/imgui.ini

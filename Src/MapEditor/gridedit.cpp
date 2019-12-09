@@ -294,7 +294,8 @@ bool cGridEdit::LoadFileByFomatter(cRenderer &renderer, const Str64 &fmt)
 	WStr64 wfmt = fmt.wstrUTF8();
 
 	vector<WStrPath> files;
-	common::CollectFiles({}, L"../media/", files);
+	const wstring mediaPath = graphic::cResourceManager::Get()->GetMediaDirectory().wstr().c_str();
+	common::CollectFiles({}, mediaPath.c_str(), files);
 
 	for (auto &str : files)
 	{

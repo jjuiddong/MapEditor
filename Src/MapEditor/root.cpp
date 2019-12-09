@@ -54,7 +54,7 @@ bool cRoot::Init()
 	string readFile = m_cfg.GetString("ReadFile");
 
 	//m_skybox.Create(renderer, "skybox");
-	m_skybox.Create(renderer, "../media/terraintextures/sky.dds");
+	m_skybox.Create(renderer, "sky.dds");
 
 	cRenderWindow *main = cDockManager::Get()->GetMainWindow();
 	m_hWnd = main->getSystemHandle();

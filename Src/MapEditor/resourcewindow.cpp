@@ -41,11 +41,10 @@ void cResourceWindow::UpdateResourceFile()
 		exts.push_back(L".png"); exts.push_back(L".PNG");
 		exts.push_back(L".dds"); exts.push_back(L".DDS");
 		vector<WStr64> ignores;
-		ignores.push_back(L"VWorld");
-		ignores.push_back(L"WorldTerrain");
 		vector<WStrPath> out;
 		out.reserve(256);
-		common::CollectFiles3(exts, L"../media/", ignores, out);
+		const wstring mediaPath = graphic::cResourceManager::Get()->GetMediaDirectory().wstr().c_str();
+		common::CollectFiles3(exts, mediaPath.c_str(), ignores, out);
 
 		m_textureFilesUTF8.reserve(256);
 		for (auto &str : out)
@@ -61,11 +60,10 @@ void cResourceWindow::UpdateResourceFile()
 			exts.push_back(str2wstr(ext));
 
 		vector<WStr64> ignores;
-		ignores.push_back(L"VWorld");
-		ignores.push_back(L"WorldTerrain");
 		vector<WStrPath> out;
 		out.reserve(256);
-		common::CollectFiles3(exts, L"../media/", ignores, out);
+		const wstring mediaPath = graphic::cResourceManager::Get()->GetMediaDirectory().wstr().c_str();
+		common::CollectFiles3(exts, mediaPath.c_str(), ignores, out);
 
 		m_modelFilesUTF8.reserve(256);
 		for (auto &str : out)
