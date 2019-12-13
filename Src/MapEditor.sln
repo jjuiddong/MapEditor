@@ -17,14 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Framework11", "..\..\Common
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug_MD|x64 = Debug_MD|x64
-		Debug_MD|x86 = Debug_MD|x86
-		Debug_MT|x64 = Debug_MT|x64
-		Debug_MT|x86 = Debug_MT|x86
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release_MD|x64 = Release_MD|x64
-		Release_MD|x86 = Release_MD|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
