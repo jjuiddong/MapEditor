@@ -1,0 +1,2 @@
+Grid-Col = 10
+Grid-Row = 10
