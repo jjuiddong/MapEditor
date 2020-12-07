@@ -31,7 +31,7 @@ cResourceViewer::~cResourceViewer()
 bool cResourceViewer::Init()
 {
 	cRenderer &renderer = GetRenderer();
-	sf::Vector2u size((u_int)m_rect.Width(), (u_int)m_rect.Height() - 45);
+	sf::Vector2u size((uint)m_rect.Width(), (uint)m_rect.Height() - 45);
 
 	m_camera.SetCamera(Vector3(10,10,10), Vector3(0,0,0), Vector3(0, 1, 0));
 	m_camera.SetProjection(MATH_PI / 4.f, (float)size.x/ (float)size.y, 1.f, 100000.0f);
@@ -208,7 +208,7 @@ void cResourceViewer::OnRender(const float deltaSeconds)
 		case eState::NONE: break;
 		case eState::TEXTURE: 
 			if (m_quad.m_texture)
-				str.Format("FileName = %s", m_quad.m_texture->m_fileName.utf8().c_str()); 
+				str.Format("FileName = %s", StrPath(m_quad.m_texture->m_fileName).utf8().c_str()); 
 			ImGui::Text(str.c_str());
 			ImGui::Text("FileSize = %s", m_fileSize.c_str());
 			break;
@@ -277,7 +277,7 @@ void cResourceViewer::RenderModelNode(const sRawNode &node)
 			ImGui::TreePop();
 		}
 
-		for (u_int i = 0; i < node.children.size(); ++i)
+		for (uint i = 0; i < node.children.size(); ++i)
 			RenderModelNode(m_model.m_model->m_nodes[node.children[i]]);
 		ImGui::TreePop();
 	}
@@ -510,7 +510,7 @@ void cResourceViewer::RenderAnimationInfo()
 		aniArray[3] = 'e';
 		aniArray[4] = '\0';
 		idx = 5;
-		for (u_int i = 0; i < m_model.m_model->m_animation.m_aniGroup->anies.size(); ++i)
+		for (uint i = 0; i < m_model.m_model->m_animation.m_aniGroup->anies.size(); ++i)
 		{
 			const sRawAni &ani = m_model.m_model->m_animation.m_aniGroup->anies[i];
 			strcpy(&aniArray[idx], ani.name.c_str());

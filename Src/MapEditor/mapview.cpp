@@ -30,7 +30,7 @@ bool cMapView::Init()
 {
 	cRenderer &renderer = GetRenderer();
 
-	sf::Vector2u size((u_int)m_rect.Width()-15, (u_int)m_rect.Height() - 50);
+	sf::Vector2u size((uint)m_rect.Width()-15, (uint)m_rect.Height() - 50);
 	cViewport vp = renderer.m_viewPort;
 	vp.m_vp.Width = (float)size.x;
 	vp.m_vp.Height = (float)size.y;
@@ -183,7 +183,7 @@ void cMapView::RenderGizmo(graphic::cRenderer &renderer, const XMMATRIX &tm)
 {
 	RET(!g_root.m_gizmo->m_controlNode)
 
-	if (GetFocus() == m_owner->getSystemHandle())
+	if (::GetFocus() == m_owner->getSystemHandle())
 	{
 		if (GetAsyncKeyState('R'))
 			g_root.m_gizmo->m_type = eGizmoEditType::ROTATE;
@@ -697,7 +697,7 @@ void cMapView::OnMouseDown(const sf::Mouse::Button &button, const POINT mousePt)
 			else if (eEditVehicle::Edge == pathEdit.m_editVehicleType)
 			{
 				int vtxIdx = -1;
-				for (u_int i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
+				for (uint i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
 				{
 					auto &v = pathEdit.m_pathFinder.m_vertices[i];
 					cBoundingBox bbox;
@@ -744,7 +744,7 @@ void cMapView::OnMouseDown(const sf::Mouse::Button &button, const POINT mousePt)
 				&& (pathEdit.m_selectVertex >= 0))
 			{
 				int addVtxIdx = -1;
-				for (u_int i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
+				for (uint i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
 				{
 					auto &v = pathEdit.m_pathFinder.m_vertices[i];
 					cBoundingBox bbox;

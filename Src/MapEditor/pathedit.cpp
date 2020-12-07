@@ -44,7 +44,7 @@ void cPathEdit::UpdateLineList(graphic::cRenderer &renderer)
 	// 버텍스끼리 연결된 라인을 생성한다. 
 	// 서로 마주보면서 연결되므로, 라인 2개를 겹치지 않게 그려야 한다. 
 	// 이 때 사용되는 플래그가 isTwo 다.
-	for (u_int k=0; k < m_pathFinder.m_vertices.size(); ++k)
+	for (uint k=0; k < m_pathFinder.m_vertices.size(); ++k)
 	{
 		ai::cPathFinder::sVertex &vtx = m_pathFinder.m_vertices[k];
 		for (int i = 0; i < ai::cPathFinder::sVertex::MAX_EDGE; ++i)
@@ -87,7 +87,7 @@ bool cPathEdit::CheckVertexConnection(
 {
 	bool checkMatch = true;
 	std::set<int> vertices; // key = vertex1 id * MAX_VERTEX + vertex2 id
-	for (u_int k = 0; k < m_pathFinder.m_vertices.size(); ++k)
+	for (uint k = 0; k < m_pathFinder.m_vertices.size(); ++k)
 	{
 		ai::cPathFinder::sVertex &vtx = m_pathFinder.m_vertices[k];
 		for (int i = 0; i < ai::cPathFinder::sVertex::MAX_EDGE; ++i)

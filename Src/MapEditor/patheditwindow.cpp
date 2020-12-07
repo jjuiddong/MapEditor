@@ -92,7 +92,7 @@ void cPathEditWindow::PathFind(cRenderer &renderer)
 		if (!m_path1.empty())
 		{
 			Vector3 offset(0, 1, 0);
-			for (u_int i = 1; i < m_path1.size(); ++i)
+			for (uint i = 1; i < m_path1.size(); ++i)
 				m_pathLines1.AddLine(renderer, m_path1[i - 1] + offset, m_path1[i] + offset, false);
 			m_pathLines1.UpdateBuffer(renderer);
 		}
@@ -105,7 +105,7 @@ void cPathEditWindow::PathFind(cRenderer &renderer)
 		if (!m_path1.empty())
 		{
 			Vector3 offset(0, 1, 0);
-			for (u_int i = 1; i < m_path1.size(); ++i)
+			for (uint i = 1; i < m_path1.size(); ++i)
 				m_pathLines1.AddLine(renderer, m_path1[i - 1] + offset, m_path1[i] + offset, false);
 			m_pathLines1.UpdateBuffer(renderer);
 		}
@@ -113,7 +113,7 @@ void cPathEditWindow::PathFind(cRenderer &renderer)
 		//if (!m_path2.empty())
 		//{
 		//	Vector3 offset(0, 1, 0);
-		//	for (u_int i = 1; i < m_path2.size(); ++i)
+		//	for (uint i = 1; i < m_path2.size(); ++i)
 		//		m_pathLines2.AddLine(renderer, m_path2[i - 1] + offset, m_path2[i] + offset, false);
 		//	m_pathLines2.UpdateBuffer(renderer);
 		//}

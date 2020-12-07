@@ -132,7 +132,7 @@ void cGridEdit::Render(cRenderer &renderer)
 						if (select)
 						{
 							// All Tile Clear
-							for (u_int i = 0; i < m_gridSelect.size(); ++i)
+							for (uint i = 0; i < m_gridSelect.size(); ++i)
 								m_gridSelect[i] = false;
 						}
 
@@ -189,7 +189,7 @@ void cGridEdit::SelectTile(cTile *tile)
 	RET(!tile);
 
 	// All Tile Clear
-	for (u_int i = 0; i < m_gridSelect.size(); ++i)
+	for (uint i = 0; i < m_gridSelect.size(); ++i)
 		m_gridSelect[i] = false;
 
 	const int tileIdx = tile->m_location.x * m_col + tile->m_location.y;

@@ -26,7 +26,7 @@ cPathMapView::~cPathMapView()
 bool cPathMapView::Init()
 {
 	cRenderer &renderer = GetRenderer();
-	sf::Vector2u size((u_int)m_rect.Width() - 15, (u_int)m_rect.Height() - 50);
+	sf::Vector2u size((uint)m_rect.Width() - 15, (uint)m_rect.Height() - 50);
 
 	m_camera.SetCamera(Vector3(-100, 70, -100), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	m_camera.SetProjection(MATH_PI / 4.f, (float)size.x / (float)size.y, 1.f, 100000.0f);
@@ -94,7 +94,7 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 
 	// Render Path Vertex, Edge
 	m_textMgr.NewFrame();
-	for (u_int i=0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
+	for (uint i=0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
 	{
 		auto &vtx = pathEdit.m_pathFinder.m_vertices[i];
 		const cBoundingBox bbox(vtx.pos + Vector3(0, pathEdit.m_offsetY, 0)
@@ -142,7 +142,7 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 	if (m_showEdgeWeight)
 	{
 		set<int> edgeKeys;
-		for (u_int i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
+		for (uint i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
 		{
 			auto &vertex = pathEdit.m_pathFinder.m_vertices[i];
 
@@ -193,7 +193,7 @@ void cPathMapView::RenderPathEdit(graphic::cRenderer &renderer
 	{
 		if (cPathEditWindow::eNaviType::NAVIMESH == pathEditWnd->m_naviType)
 		{
-			for (u_int i=0; i < naviEdit.m_naviMesh.m_naviNodes.size(); ++i)
+			for (uint i=0; i < naviEdit.m_naviMesh.m_naviNodes.size(); ++i)
 			{
 				auto &node = naviEdit.m_naviMesh.m_naviNodes[i];
 				const Vector3 center = node.center;
@@ -444,7 +444,7 @@ void cPathMapView::OnMouseDown(const sf::Mouse::Button &button, const POINT mous
 			else if (eEditVehicle::Edge == pathEdit.m_editVehicleType)
 			{
 				int vtxIdx = -1;
-				for (u_int i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
+				for (uint i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
 				{
 					auto &v = pathEdit.m_pathFinder.m_vertices[i];
 					cBoundingBox bbox;
@@ -489,7 +489,7 @@ void cPathMapView::OnMouseDown(const sf::Mouse::Button &button, const POINT mous
 				&& (pathEdit.m_selectVertex >= 0))
 			{
 				int addVtxIdx = -1;
-				for (u_int i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
+				for (uint i = 0; i < pathEdit.m_pathFinder.m_vertices.size(); ++i)
 				{
 					auto &v = pathEdit.m_pathFinder.m_vertices[i];
 					cBoundingBox bbox;

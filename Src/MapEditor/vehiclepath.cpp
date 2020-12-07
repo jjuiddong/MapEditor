@@ -25,7 +25,7 @@ bool cVehiclePath::SetPath(const vector<Vector3> &path, const Vector3 &direction
 {
 	m_initialDirection = direction;
 	m_path.resize(path.size());
-	for (u_int i=0; i < path.size(); ++i)
+	for (uint i=0; i < path.size(); ++i)
 		m_path[i] = path[i];
 
 	if (!m_path.empty())

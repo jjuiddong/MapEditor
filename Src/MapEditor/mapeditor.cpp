@@ -3,6 +3,7 @@
 //
 #include "stdafx.h"
 
+
 using namespace graphic;
 using namespace framework;
 
@@ -43,7 +44,7 @@ cMapEditor::~cMapEditor()
 
 bool cMapEditor::OnInit()
 {
-	DragAcceptFiles(m_hWnd, TRUE);
+	::DragAcceptFiles(m_hWnd, TRUE);
 
 	dbg::RemoveLog();
 	dbg::RemoveErrLog();

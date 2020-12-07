@@ -8,6 +8,7 @@
 using namespace common;
 
 #include <shobjidl.h> 
+#include <shellapi.h> // DragAcceptFiles()
 #include "root.h"
 #include "CFW1StateSaver.h"
 #include "component/cctv.h"
